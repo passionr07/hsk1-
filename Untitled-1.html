@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HSK 1 - 1-р хичээл: Бүрэн ба Хялбаршуулсан цогц хөтөлбөр</title>
+  <style>
+    :root {
+      --primary: #e63946;
+      --primary-hover: #c92a37;
+      --navy: #1d3557;
+      --sky: #457b9d;
+      --mint: #a8dadc;
+      --soft-bg: #f8fafc;
+      --card-white: #ffffff;
+      --border-line: #e2e8f0;
+      --text-dark: #2d3748;
+      --text-gray: #4a5568;
+      --green: #2ecc71;
+      --red: #e74c3c;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+
+    body {
+      background-color: #f1f5f9;
+      color: var(--text-dark);
+      line-height: 1.65;
+      padding-bottom: 80px;
+    }
+
+    header {
+      background: linear-gradient(135deg, #e63946, #b51726);
+      color: white;
+      text-align: center;
+      padding: 40px 16px 30px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    header h1 {
+      font-size: 32px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+    }
+
+    header p {
+      font-size: 16px;
+      opacity: 0.95;
+    }
+
+    /* Навигацийн хэсэг */
+    .unit-bar-wrapper {
+      background-color: var(--navy);
+      display: flex;
+      justify-content: center;
+      overflow-x: auto;
+      padding: 10px 16px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .unit-bar {
+      display: flex;
+      gap: 8px;
+    }
+
+    .unit-chip {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #fff;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+    }
+
+    .unit-chip.active, .unit-chip:hover {
+      background-color: var(--primary);
+      border-color: var(--primary);
+    }
+
+    .container {
+      max-width: 960px;
+      margin: 24px auto;
+      padding: 0 16px;
+    }
+
+    /* Табууд */
+    .tab-nav {
+      display: flex;
+      background: var(--card-white);
+      border-radius: 16px 16px 0 0;
+      border: 1px solid var(--border-line);
+      border-bottom: none;
+      overflow: hidden;
+    }
+
+    .tab-btn {
+      flex: 1;
+      padding: 18px 10px;
+      border: none;
+      background: #f8fafc;
+      font-size: 15px;
+      font-weight: 700;
+      color: #718096;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .tab-btn.active {
+      background: var(--card-white);
+      color: var(--primary);
+      border-bottom: 3px solid var(--primary);
+    }
+
+    .tab-content {
+      display: none;
+      background: var(--card-white);
+      padding: 36px 30px;
+      border-radius: 0 0 16px 16px;
+      border: 1px solid var(--border-line);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.04);
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    /* Бүлгийн гарчиг ба блок */
+    .block-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 36px 0 18px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--border-line);
+    }
+
+    .block-header:first-child {
+      margin-top: 0;
+    }
+
+    .badge-icon {
+      background: var(--primary);
+      color: white;
+      width: 34px;
+      height: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      font-size: 16px;
+      font-weight: 800;
+    }
+
+    .block-title {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--navy);
+    }
+
+    .guide-box {
+      background: #fff8f0;
+      border-left: 5px solid #f39c12;
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 14px 0 22px;
+      font-size: 15px;
+    }
+
+    .guide-box strong {
+      color: #d35400;
+    }
+
+    /* Диалог хэсэг */
+    .dialogue-item {
+      background: #f8fafc;
+      border: 1px solid var(--border-line);
+      border-left: 5px solid var(--primary);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 14px;
+    }
+
+    .dialogue-hanzi {
+      font-size: 22px;
+      font-weight: 800;
+      color: #1a202c;
+    }
+
+    .dialogue-pinyin {
+      font-size: 15px;
+      color: var(--primary);
+      font-weight: 700;
+      margin: 2px 0 4px;
+    }
+
+    .dialogue-trans {
+      font-size: 14px;
+      color: var(--text-gray);
+    }
+
+    /* Тоглоомын маягтай картууд */
+    .grid-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 12px;
+      margin: 16px 0 24px;
+    }
+
+    .card-item {
+      background: #ffffff;
+      border: 2px solid var(--border-line);
+      border-radius: 12px;
+      padding: 16px 12px;
+      text-align: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+      transition: transform 0.15s, border-color 0.15s;
+    }
+
+    .card-item:hover {
+      transform: translateY(-2px);
+      border-color: var(--sky);
+    }
+
+    .card-icon {
+      font-size: 28px;
+      margin-bottom: 4px;
+    }
+
+    .card-main {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--navy);
+    }
+
+    .card-sub {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .card-desc {
+      font-size: 13px;
+      color: var(--text-gray);
+      margin-top: 4px;
+    }
+
+    /* 4 Тон - Машин ба Аялгуу */
+    .tone-strip {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 14px;
+      margin: 16px 0 24px;
+    }
+
+    .tone-box {
+      background: white;
+      border-radius: 12px;
+      padding: 18px 14px;
+      text-align: center;
+      border: 2px solid var(--border-line);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+    }
+
+    .tone-box.t1 { border-top: 6px solid #e74c3c; }
+    .tone-box.t2 { border-top: 6px solid #3498db; }
+    .tone-box.t3 { border-top: 6px solid #2ecc71; }
+    .tone-box.t4 { border-top: 6px solid #f39c12; }
+
+    .tone-symbol {
+      font-size: 30px;
+      font-weight: 900;
+    }
+
+    .tone-word {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--navy);
+      margin: 6px 0;
+    }
+
+    .tone-tip {
+      font-size: 13px;
+      color: var(--text-gray);
+      text-align: left;
+    }
+
+    /* Хүснэгт */
+    .table-custom {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0 24px;
+      font-size: 14px;
+    }
+
+    .table-custom th, .table-custom td {
+      border: 1px solid var(--border-line);
+      padding: 10px 14px;
+      text-align: left;
+    }
+
+    .table-custom th {
+      background: #f8fafc;
+      font-weight: 700;
+      color: var(--navy);
+    }
+
+    /* Тестийн хэсэг */
+    .quiz-group {
+      background: #f8fafc;
+      border: 1px solid var(--border-line);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .quiz-quest {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 12px;
+    }
+
+    .quiz-opt {
+      display: block;
+      background: white;
+      border: 2px solid var(--border-line);
+      border-radius: 8px;
+      padding: 10px 14px;
+      margin-bottom: 8px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: 0.15s;
+    }
+
+    .quiz-opt:hover {
+      background: #f1f5f9;
+    }
+
+    .quiz-opt input {
+      margin-right: 10px;
+    }
+
+    .btn-check {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 14px 28px;
+      font-size: 15px;
+      font-weight: 700;
+      border-radius: 8px;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 10px;
+      transition: 0.2s;
+    }
+
+    .btn-check:hover {
+      background: var(--primary-hover);
+    }
+
+    .feedback-msg {
+      margin-top: 10px;
+      padding: 10px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 700;
+      display: none;
+    }
+
+    .feedback-msg.correct {
+      background: #e8f8f0;
+      color: #1e7e34;
+      display: block;
+    }
+
+    .feedback-msg.incorrect {
+      background: #fdeeee;
+      color: #c0392b;
+      display: block;
+    }
+
+    .explain-card {
+      background: #f8fafc;
+      border-left: 5px solid var(--sky);
+      border-radius: 8px;
+      padding: 18px 20px;
+      margin-bottom: 16px;
+    }
+
+    .explain-card h4 {
+      font-size: 15px;
+      color: var(--navy);
+      margin-bottom: 6px;
+    }
+
+    .explain-card p {
+      font-size: 14px;
+      color: var(--text-gray);
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>🇨🇳 Хятад хэлний анхны алхам</h1>
+    <p>1-р хичээл: 你好 (Сайн байна уу?) — Хүүхэд ч ойлгохоор хялбаршуулсан бүрэн хувилбар</p>
+  </header>
+
+  <div class="unit-bar-wrapper">
+    <nav class="unit-bar">
+      <button class="unit-chip active">1-р хичээл: 你好</button>
+      <button class="unit-chip">2-р хичээл: 谢谢你</button>
+      <button class="unit-chip">3-р хичээл: 你叫什么名字</button>
+      <button class="unit-chip">4-р хичээл: 她是我的汉语老师</button>
+      <button class="unit-chip">5-р хичээл: 她女儿今年二十岁</button>
+      <button class="unit-chip">6-р хичээл: 我会说汉语</button>
+      <button class="unit-chip">7-р хичээл: 今天几号</button>
+      <button class="unit-chip">8-р хичээл: 我想喝茶</button>
+      <button class="unit-chip">9-р хичээл: 你儿子在哪儿工作</button>
+      <button class="unit-chip">10-р хичээл: 我能坐这儿吗</button>
+    </nav>
+  </div>
+
+  <main class="container">
+    <div class="tab-nav">
+      <button class="tab-btn active" onclick="switchMainTab(0)">📖 1. Хялбар онол ба Зурган тайлбар</button>
+      <button class="tab-btn" onclick="switchMainTab(1)">🎮 2. Өөрийгөө шалгах тест</button>
+      <button class="tab-btn" onclick="switchMainTab(2)">💡 3. Багшийн хариу ба Зөвлөгөө</button>
+    </div>
+
+    <!-- ТАБ 1: ДЭЛГЭРЭНГҮЙ БӨГӨӨД ОЙЛГОМЖТОЙ ОНОЛ -->
+    <div class="tab-content active" id="tab-0">
+
+      <div class="guide-box">
+        <strong>💡 Хятад хэлийг анхлан суралцагчдад өгөх бяцхан нууц:</strong><br>
+        Хятад хэлэнд монгол хэл шиг цагаан толгойн үсэг байдаггүй. Оронд нь <strong>жижиг зураг шиг дүрсүүд (Ханз)</strong> байдаг. Харин тэр зургийг нь яаж дуудахыг латин үсгээр бичсэнийг <strong>Пиньинь</strong> гэж нэрлэдэг юм шүү дээ!
+      </div>
+
+      <!-- ХЭСЭГ 1: ДИАЛОГУУД -->
+      <div class="block-header">
+        <div class="badge-icon">1</div>
+        <div class="block-title">Харилцан яриа: Мэндлэх ба Уучлалт гуйх (课文)</div>
+      </div>
+
+      <div class="dialogue-item">
+        <div class="dialogue-hanzi">1. A: 你好！ ➜ B: 你好！ 👋</div>
+        <div class="dialogue-pinyin">A: Nǐ hǎo! ➜ B: Nǐ hǎo!</div>
+        <div class="dialogue-trans"><strong>Утга:</strong> Сайн байна уу! ➜ Сайн байна уу! (Үе тэнгийн найз нөхөд, өдөр тутамдаа мэндлэх үг)</div>
+      </div>
+
+      <div class="dialogue-item">
+        <div class="dialogue-hanzi">2. A: 您好！ ➜ B: 你们好！ 🤝</div>
+        <div class="dialogue-pinyin">A: Nín hǎo! ➜ B: Nǐmen hǎo!</div>
+        <div class="dialogue-trans">
+          • <strong>您好:</strong> Та сайн байна уу! (Багш, өвөө эмээ, ахмад хүмүүст зүрхнээсээ хүндэтгэж хэлнэ)<br>
+          • <strong>你们好:</strong> Та нар сайн байцгаана уу! (Олон хүнд нэгэн зэрэг хандаж хэлнэ)[]
+        </div>
+      </div>
+
+      <div class="dialogue-item">
+        <div class="dialogue-hanzi">3. A: 对不起！ 🙈 ➜ B: 没关系！ 😊</div>
+        <div class="dialogue-pinyin">A: Duìbuqǐ! ➜ B: Méi guānxi!</div>
+        <div class="dialogue-trans">
+          • <strong>对不起:</strong> Ёоё уучлаарай! (Санамсаргүй хөл дээр гишгэх, алдаа гаргах үед)[]<br>
+          • <strong>没关系:</strong> Зүгээр ээ, гайгүй дөө! (Уучлал хүссэн хүнд эелдэг хариулах үг)[]
+        </div>
+      </div>
+
+      <!-- ХЭСЭГ 2: 4 ТОН -->
+      <div class="block-header">
+        <div class="badge-icon">2</div>
+        <div class="block-title">Хятад хэл бол дуу! 4 Тон буюу Дууны аялга (声调)[]</div>
+      </div>
+      <p style="font-size: 14px; margin-bottom: 10px;">Хятад хэлний үг бүр өөрийн дууны аялгатай[]. Хэрвээ аялгыг нь буруу дуулчихвал огт өөр үг болчихдог[]:</p>
+
+      <div class="tone-strip">
+        <div class="tone-box t1">
+          <div class="tone-symbol">¯ (1-р тон)[]</div>
+          <div class="tone-word">妈 (mā)[]</div>
+          <div class="tone-tip">
+            <strong>Эмчийн үзлэг шиг:</strong><br>
+            Эмчид хоолойгоо шалгуулахдаа "Аааа" гэж өндөр, шулуун, тэгшхэн дуугардаг даа? Тэрэн шиг хэлнэ[].<br>
+            👉 <strong>Ээж</strong> гэсэн үг[].
+          </div>
+        </div>
+
+        <div class="tone-box t2">
+          <div class="tone-symbol">ˊ (2-р тон)[]</div>
+          <div class="tone-word">麻 (má)[]</div>
+          <div class="tone-tip">
+            <strong>Гайхсан асуулт шиг:</strong><br>
+            Сонсоогүй зүйлээ гайхаад "Айн? Юу гэнэ ээ?" гэж дээшээ өгсөж асуудаг аялгатай яг ижилхэн[].<br>
+            👉 <strong>Олс, маалинга</strong> гэсэн үг[].
+          </div>
+        </div>
+
+        <div class="tone-box t3">
+          <div class="tone-symbol">ˇ (3-р тон)[]</div>
+          <div class="tone-word">马 (mǎ)[]</div>
+          <div class="tone-tip">
+            <strong>Галзуу хулгана шиг:</strong><br>
+            Эхлээд доошоо уруудаж бүдүүн дуугараад, буцаад дээшээ сөхөгдөнө[].<br>
+            👉 <strong>Морь</strong> гэсэн үг[].
+          </div>
+        </div>
+
+        <div class="tone-box t4">
+          <div class="tone-symbol">ˋ (4-р тон)[]</div>
+          <div class="tone-word">骂 (mà)[]</div>
+          <div class="tone-tip">
+            <strong>Бөмбөг шидэх шиг:</strong><br>
+            Дээрээс доош "Пас!" гээд огцом унаж буй мэт маш богино, хүчтэй хэлнэ[].<br>
+            👉 <strong>Зандрах, хараах</strong> гэсэн үг[].
+          </div>
+        </div>
+      </div>
+
+      <!-- ХЭСЭГ 3: АВИА ЗҮЙ БА ҮСГҮҮД -->
+      <div class="block-header">
+        <div class="badge-icon">3</div>
+        <div class="block-title">Үг бүтээх саваанууд: 14 Эхний үсэг (声母) ба Эгшгүүд (韵母)[]</div>
+      </div>
+      <p style="font-size: 14px; margin-bottom: 12px;">Үгийг дуудахдаа эхний гийгүүлэгч болон ард нь орох эгшгийг хослуулж хэлдэг[]:</p>
+
+      <table class="table-custom">
+        <thead>
+          <tr><th>Бүлэг</th><th>Үсгүүд</th><th>Хүүхдэд зориулсан дуудах хялбар арга</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Уруулын 4 найз[]</strong></td>
+            <td><strong>b, p, m, f[]</strong></td>
+            <td><strong>b</strong> = б (зөөлөн), <strong>p</strong> = п (урагшаа хий үлээж), <strong>m</strong> = м, <strong>f</strong> = ф[]</td>
+          </tr>
+          <tr>
+            <td><strong>Хэлний үзүүрийн 4 найз[]</strong></td>
+            <td><strong>d, t, n, l[]</strong></td>
+            <td><strong>d</strong> = д (сулхан), <strong>t</strong> = т (хий үлээж чанга), <strong>n</strong> = н, <strong>l</strong> = л[]</td>
+          </tr>
+          <tr>
+            <td><strong>Хоолойн 3 найз[]</strong></td>
+            <td><strong>g, k, h[]</strong></td>
+            <td><strong>g</strong> = г (зөөлөн), <strong>k</strong> = к (хий үлээж), <strong>h</strong> = х (хоолойн гүнээс хүчтэй)[]</td>
+          </tr>
+          <tr>
+            <td><strong>Шүдний цаанаас гарах 3 найз[]</strong></td>
+            <td><strong>j, q, x[]</strong></td>
+            <td><strong>j</strong> = ж/з хооронд, <strong>q</strong> = ч/ц хооронд хүчтэй хий гаргаж, <strong>x</strong> = зөөлөн ш/с[]</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="guide-box">
+        <strong>🎈 Сонин содон эгшгүүдтэй танилцъя:</strong><br>
+        • <strong>ü</strong> ➜ Уруулаа шүгэл үлээх гэж байгаа юм шиг "У" болгон цорвойлгоод "И" гэж хэлнэ[]!<br>
+        • <strong>er</strong> ➜ "Эр" гэж хэлэхдээ хэлнийхээ үзүүрийг тагнай руугаа арагш хотойлгож эргүүлнэ[].
+      </div>
+
+      <!-- ХЭСЭГ 4: Y БА W АВРАГЧДЫН ДҮРЭМ -->
+      <div class="block-header">
+        <div class="badge-icon">4</div>
+        <div class="block-title">"y" ба "w" гэдэг хоёр аврагчийн дүрэм[]</div>
+      </div>
+      <p style="font-size: 14px; margin-bottom: 12px;">Хэрэв эгшиг ганцаараа үлдэж, урдаа ямар ч гийгүүлэгч байхгүй бол <strong>y</strong> эсвэл <strong>w</strong> үсэг ирж тусалдаг[]:</p>
+      
+      <div class="grid-cards">
+        <div class="card-item">
+          <div class="card-icon">🐟</div>
+          <div class="card-main">yú (鱼)[]</div>
+          <div class="card-sub">ü үсэг дангаараа[]</div>
+          <div class="card-desc">Урд нь "y" ирээд, ü-гийн дээрх хоёр цэгийг арилгаж <strong>yu</strong> болгож бичнэ[]. Утга: <strong>Загас</strong>[].</div>
+        </div>
+
+        <div class="card-item">
+          <div class="card-icon">1️⃣</div>
+          <div class="card-main">yī (一)[]</div>
+          <div class="card-sub">i үсэг дангаараа[]</div>
+          <div class="card-desc">Урд нь "y" аврагч ирж <strong>yi</strong> болно[]. Утга: <strong>Нэг (1)</strong>[].</div>
+        </div>
+
+        <div class="card-item">
+          <div class="card-icon">5️⃣</div>
+          <div class="card-main">wǔ (五)[]</div>
+          <div class="card-sub">u үсэг дангаараа[]</div>
+          <div class="card-desc">Урд нь "w" аврагч ирж <strong>wu</strong> болно[]. Утга: <strong>Тав (5)</strong>[].</div>
+        </div>
+      </div>
+
+      <!-- ХЭСЭГ 5: ЗУРАГТ ҮГС -->
+      <div class="block-header">
+        <div class="badge-icon">5</div>
+        <div class="block-title">Номын бүх зурагт үгстэй танилцъя[]</div>
+      </div>
+      
+      <p style="font-size: 14px; font-weight: 700; color: var(--navy); margin-top: 10px;">Нэг үетэй зурагт үгс:[]</p>
+      <div class="grid-cards">
+        <div class="card-item"><div class="card-icon">👂</div><div class="card-main">ěr (耳)</div><div class="card-desc">Чих[]</div></div>
+        <div class="card-item"><div class="card-icon">✏️</div><div class="card-main">bǐ (笔)</div><div class="card-desc">Үзэг, бийр[]</div></div>
+        <div class="card-item"><div class="card-icon">🦆</div><div class="card-main">yā (鸭)</div><div class="card-desc">Нугас[]</div></div>
+        <div class="card-item"><div class="card-icon">🐔</div><div class="card-main">jī (鸡)</div><div class="card-desc">Тахиа[]</div></div>
+        <div class="card-item"><div class="card-icon">🗡️</div><div class="card-main">dāo (刀)</div><div class="card-desc">Хутга[]</div></div>
+        <div class="card-item"><div class="card-icon">🌸</div><div class="card-main">huā (花)</div><div class="card-desc">Цэцэг[]</div></div>
+        <div class="card-item"><div class="card-icon">7️⃣</div><div class="card-main">qī (七)</div><div class="card-desc">Долоо (7)[]</div></div>
+        <div class="card-item"><div class="card-icon">👞</div><div class="card-main">xié (鞋)</div><div class="card-desc">Гутал[]</div></div>
+        <div class="card-item"><div class="card-icon">❄️</div><div class="card-main">xuě (雪)</div><div class="card-desc">Цас[]</div></div>
+      </div>
+
+      <p style="font-size: 14px; font-weight: 700; color: var(--navy); margin-top: 14px;">Хоёр үетэй амтат ба сонирхолтой үгс:[]</p>
+      <div class="grid-cards">
+        <div class="card-item"><div class="card-icon">☕</div><div class="card-main">kāfēi (咖啡)</div><div class="card-desc">Кофе[]</div></div>
+        <div class="card-item"><div class="card-icon">🥤</div><div class="card-main">kělè (可乐)</div><div class="card-desc">Кола[]</div></div>
+        <div class="card-item"><div class="card-icon">🍗</div><div class="card-main">kǎoyā (烤鸭)</div><div class="card-desc">Шарсан нугас[]</div></div>
+        <div class="card-item"><div class="card-icon">🍲</div><div class="card-main">huǒguō (火锅)</div><div class="card-desc">Халуун тогоо[]</div></div>
+        <div class="card-item"><div class="card-icon">🗺️</div><div class="card-main">dìtú (地图)</div><div class="card-desc">Газрын зураг[]</div></div>
+        <div class="card-item"><div class="card-icon">✈️</div><div class="card-main">fēijī (飞机)</div><div class="card-desc">Онгоц[]</div></div>
+        <div class="card-item"><div class="card-icon">🖌️</div><div class="card-main">máobǐ (毛笔)</div><div class="card-desc">Бийр[]</div></div>
+        <div class="card-item"><div class="card-icon">🎧</div><div class="card-main">ěrjī (耳机)</div><div class="card-desc">Чихэвч[]</div></div>
+      </div>
+
+      <!-- ХЭСЭГ 6: 3+3 ТОНЫ ХУВИРАЛ -->
+      <div class="block-header">
+        <div class="badge-icon">6</div>
+        <div class="block-title">Шидэт дүрэм: Хоёр ширхэг 3-р тон уулзвал юу болох вэ?[]</div>
+      </div>
+
+      <div class="guide-box">
+        <strong>🎭 Тоны дүрэм (Tone Sandhi: 3 + 3 ➜ 2 + 3):</strong><br>
+        Хэрвээ 3-р тонтой хоёр үг дараалж орвол хэлэхэд хэтэрхий урт ядаргаатай болдог тул <strong>эхний үг нь 2-р тон болж хөнгөрөн дээшээ өгсдөг</strong>[]!<br>
+        • Бичигдэхдээ: <strong>nǐ</strong> (3) + <strong>hǎo</strong> (3)[]<br>
+        • Амнаас гарахдаа: <strong>ní hǎo</strong> (2 + 3) болж аялагдана[]!
+      </div>
+
+      <table class="table-custom">
+        <thead>
+          <tr><th>Ханз</th><th>Бичигдэх пиньинь</th><th>Амнаас гарах бодит дуудлага</th><th>Монгол утга</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>你好</strong></td><td>nǐ hǎo</td><td><strong>ní hǎo[]</strong></td><td>сайн байна уу[]</td></tr>
+          <tr><td><strong>可以</strong></td><td>kěyǐ</td><td><strong>kéyǐ[]</strong></td><td>болно, зөвшөөрөх[]</td></tr>
+          <tr><td><strong>辅导</strong></td><td>fǔdǎo</td><td><strong>fúdǎo[]</strong></td><td>давтлага өгөх[]</td></tr>
+          <tr><td><strong>小姐</strong></td><td>xiǎojiě</td><td><strong>xiáojiě[]</strong></td><td>эгчмэд бүсгүй[]</td></tr>
+          <tr><td><strong>雨伞</strong></td><td>yǔsǎn</td><td><strong>yúsǎn[]</strong></td><td>шүхэр[]</td></tr>
+          <tr><td><strong>手表</strong></td><td>shǒubiǎo</td><td><strong>shóubiǎo[]</strong></td><td>бугуйн цаг[]</td></tr>
+        </tbody>
+      </table>
+
+      <!-- ХЭСЭГ 7: АНГИЙН 5 ХЭЛЛЭГ -->
+      <div class="block-header">
+        <div class="badge-icon">7</div>
+        <div class="block-title">Анги доторх 5 шидэт команд (课堂用语)[]</div>
+      </div>
+
+      <div class="grid-cards">
+        <div class="card-item">
+          <div class="card-icon">🔔</div>
+          <div class="card-main">上课！</div>
+          <div class="card-sub">Shàng kè![]</div>
+          <div class="card-desc"><strong>Хичээл эхэллээ![]</strong> (Хонх дуугарахад)</div>
+        </div>
+        <div class="card-item">
+          <div class="card-icon">🏃‍♂️</div>
+          <div class="card-main">下课！</div>
+          <div class="card-sub">Xià kè![]</div>
+          <div class="card-desc"><strong>Хичээл тарав![]</strong> (Гэртээ харих үед)</div>
+        </div>
+        <div class="card-item">
+          <div class="card-icon">🧃</div>
+          <div class="card-main">现在休息！</div>
+          <div class="card-sub">Xiànzài xiūxi![]</div>
+          <div class="card-desc"><strong>Одоо амарцгаая![]</strong> (Завсарлах үед)</div>
+        </div>
+        <div class="card-item">
+          <div class="card-icon">👀</div>
+          <div class="card-main">看黑板！</div>
+          <div class="card-sub">Kàn hēibǎn![]</div>
+          <div class="card-desc"><strong>Самбар луу хараарай![]</strong></div>
+        </div>
+        <div class="card-item">
+          <div class="card-icon">🗣️</div>
+          <div class="card-main">跟我读！</div>
+          <div class="card-sub">Gēn wǒ dú![]</div>
+          <div class="card-desc"><strong>Намайг дагаад унш![]</strong></div>
+        </div>
+      </div>
+
+      <!-- ХЭСЭГ 8: ХАНЗ ЗУРАХ БА ТОО ТООЛОЛ -->
+      <div class="block-header">
+        <div class="badge-icon">8</div>
+        <div class="block-title">Ханз зурах 5 мод ба Тоо тоолол[]</div>
+      </div>
+      <p style="font-size: 14px; margin-bottom: 12px;">Ханзыг дараах 5 үндсэн зураасаар (саваагаар) зурдаг[]:</p>
+
+      <table class="table-custom">
+        <thead>
+          <tr><th>Нэр</th><th>Хэлбэр</th><th>Чиглэл</th><th>Хэрхэн төсөөлөх вэ?</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>横 (héng)[]</strong></td><td>一[]</td><td>Зүүнээс баруун[]</td><td>Ширээн дээр хэвтэж байгаа хөндлөн савх[]</td></tr>
+          <tr><td><strong>竖 (shù)[]</strong></td><td>丨[]</td><td>Дээрээс доош[]</td><td>Босоо зоосон шон мод[]</td></tr>
+          <tr><td><strong>撇 (piě)[]</strong></td><td>丿[]</td><td>Зүүн доош[]</td><td>Салхинд зүүн тийш налсан өвс[]</td></tr>
+          <tr><td><strong>捺 (nà)[]</strong></td><td>乀[]</td><td>Баруун доош[]</td><td>Уулын баруун уруу гулсуураар гулгах[]</td></tr>
+          <tr><td><strong>点 (diǎn)[]</strong></td><td>丶[]</td><td>Богино цэг[]</td><td>Тэнгэрээс дуссан ганц дусал бороо[]</td></tr>
+        </tbody>
+      </table>
+
+      <p style="font-size: 14px; font-weight: 700; color: var(--navy); margin-top: 14px;">1-р хичээлийн 6 ханз (Тоо тоолол):[]</p>
+      <div class="grid-cards">
+        <div class="card-item"><div class="card-main" style="font-size:32px;">一</div><div class="card-sub">yī (1)[]</div><div class="card-desc">1 хөндлөн зураас[]</div></div>
+        <div class="card-item"><div class="card-main" style="font-size:32px;">二</div><div class="card-sub">èr (2)[]</div><div class="card-desc">2 хөндлөн зураас[]</div></div>
+        <div class="card-item"><div class="card-main" style="font-size:32px;">三</div><div class="card-sub">sān (3)[]</div><div class="card-desc">3 хөндлөн зураас[]</div></div>
+        <div class="card-item"><div class="card-main" style="font-size:32px;">十</div><div class="card-sub">shí (10)[]</div><div class="card-desc">Нэмэх (+) тэмдэг[]</div></div>
+        <div class="card-item"><div class="card-main" style="font-size:32px;">八</div><div class="card-sub">bā (8)[]</div><div class="card-desc">Байшингийн дээвэр шиг[]</div></div>
+        <div class="card-item"><div class="card-main" style="font-size:32px;">六</div><div class="card-sub">liù (6)[]</div><div class="card-desc">Малгай өмсөөд зогссон хүн[]</div></div>
+      </div>
+
+    </div>
+
+    <!-- ТАБ 2: БҮХ АГУУЛГЫГ ХАМАРСАН ТЕСТ -->
+    <div class="tab-content" id="tab-1">
+      <form id="full-quiz">
+        
+        <div class="quiz-group">
+          <div class="quiz-quest">1. Ангийнхаа багштай эсвэл өвөө эмээтэйгээ мэндлэхдээ алийг нь хэлэх вэ?[]</div>
+          <label class="quiz-opt"><input type="radio" name="q1" value="A"> 你好！ (Nǐ hǎo!)[]</label>
+          <label class="quiz-opt"><input type="radio" name="q1" value="B"> 您好！ (Nín hǎo!)[]</label>
+          <label class="quiz-opt"><input type="radio" name="q1" value="C"> 没关系！ (Méi guānxi!)[]</label>
+          <div class="feedback-msg" id="f-q1"></div>
+        </div>
+
+        <div class="quiz-group">
+          <div class="quiz-quest">2. Хэн нэгэн танд "对不起！" (Duìbuqǐ - Уучлаарай) гэвэл та юу гэж хариулах вэ?[]</div>
+          <label class="quiz-opt"><input type="radio" name="q2" value="A"> 没关系！ (Méi guānxi - Зүгээр ээ)[]</label>
+          <label class="quiz-opt"><input type="radio" name="q2" value="B"> 你们好！ (Nǐmen hǎo!)[]</label>
+          <label class="quiz-opt"><input type="radio" name="q2" value="C"> 上课！ (Shàng kè!)[]</label>
+          <div class="feedback-msg" id="f-q2"></div>
+        </div>
+
+        <div class="quiz-group">
+          <div class="quiz-quest">3. Хятад хэлэнд "Ээж" гэсэн утгатай mā (妈) үг ямар тоноор дуудагддаг вэ?[]</div>
+          <label class="quiz-opt"><input type="radio" name="q3" value="A"> 1-р тон (Өндөр, тэгшхэн шулуун)[]</label>
+          <label class="quiz-opt"><input type="radio" name="q3" value="B"> 3-р тон (Уруудаж сөхөгддөг)[]</label>
+          <label class="quiz-opt"><input type="radio" name="q3" value="C"> 4-р тон (Огцом унадаг)[]</label>
+          <div class="feedback-msg" id="f-q3"></div>
+        </div>
+
+        <div class="quiz-group">
+          <div class="quiz-quest">4. "你好" (nǐ hǎo) гэсэн үгийг амнаас гарахдаа хэрхэн дуудах вэ?[]</div>
+          <label class="quiz-opt"><input type="radio" name="q4" value="A"> Хоёуланг нь 3-р тоноор[]</label>
+          <label class="quiz-opt"><input type="radio" name="q4" value="B"> Эхний "nǐ" нь 2-р тон болж "ní hǎo" болно[]</label>
+          <label class="quiz-opt"><input type="radio" name="q4" value="C"> Сүүлийн "hǎo" нь 1-р тон болно</label>
+          <div class="feedback-msg" id="f-q4"></div>
+        </div>
+
+        <div class="quiz-group">
+          <div class="quiz-quest">5. "ü" эгшиг ганцаараа үе үүсгэхдээ "y"-тэй нийлж хэрхэн бичигддэг вэ?[]</div>
+          <label class="quiz-opt"><input type="radio" name="q5" value="A"> yü (цэгийг хэвээр үлдээнэ)</label>
+          <label class="quiz-opt"><input type="radio" name="q5" value="B"> yu (дээрх хоёр цэг нь арилна)[]</label>
+          <label class="quiz-opt"><input type="radio" name="q5" value="C"> wu болж хувирна</label>
+          <div class="feedback-msg" id="f-q5"></div>
+        </div>
+
+        <div class="quiz-group">
+          <div class="quiz-quest">6. "kāfēi" (咖啡) болон "kělè" (可乐) гэсэн хос үгс ямар утгатай вэ?[]</div>
+          <label class="quiz-opt"><input type="radio" name="q6" value="A"> Кофе ба Кола[]</label>
+          <label class="quiz-opt"><input type="radio" name="q6" value="B"> Цай ба Ус</label>
+          <label class="quiz-opt"><input type="radio" name="q6" value="C"> Тахиа ба Загас[]</label>
+          <div class="feedback-msg" id="f-q6"></div>
+        </div>
+
+        <div class="quiz-group">
+          <div class="quiz-quest">7. Багш хичээл тарахад юу гэж хэлдэг вэ?[]</div>
+          <label class="quiz-opt"><input type="radio" name="q7" value="A"> 上课！ (Shàng kè!)[]</label>
+          <label class="quiz-opt"><input type="radio" name="q7" value="B"> 下课！ (Xià kè!)[]</label>
+          <label class="quiz-opt"><input type="radio" name="q7" value="C"> 看黑板！ (Kàn hēibǎn!)[]</label>
+          <div class="feedback-msg" id="f-q7"></div>
+        </div>
+
+        <div class="quiz-group">
+          <div class="quiz-quest">8. Математикийн нэмэх тэмдэг шиг харагддаг "十" ханз ямар тоо вэ?[]</div>
+          <label class="quiz-opt"><input type="radio" name="q8" value="A"> 8[]</label>
+          <label class="quiz-opt"><input type="radio" name="q8" value="B"> 10[]</label>
+          <label class="quiz-opt"><input type="radio" name="q8" value="C"> 6[]</label>
+          <div class="feedback-msg" id="f-q8"></div>
+        </div>
+
+        <button type="button" class="btn-check" onclick="checkAllQuiz()">Бүгдийг шалгах 🚀</button>
+      </form>
+    </div>
+
+    <!-- ТАБ 3: БАГШИЙН ДЭЛГЭРЭНГҮЙ ХАРИУ БА ТАЙЛБАР -->
+    <div class="tab-content" id="tab-2">
+      <div class="block-header" style="margin-top:0;">
+        <div class="badge-icon">✓</div>
+        <div class="block-title">Дасгалын зөв хариулт ба сургамж[]</div>
+      </div>
+
+      <div class="explain-card">
+        <h4>1. Зөв хариу: [B] 您好！ (Nín hǎo!)[]</h4>
+        <p>Ахмад настан, багш, өвөө эмээдээ хүндэтгэл үзүүлэхдээ "你" биш "您" гэж хэлдэг[]. Ханзыг нь харвал "你" ханзны доор зүрхний дүрс буюу "心" орсон байгаа нь чин сэтгэлээсээ хүндэлж буйн илэрхийлэл юм[].</p>
+      </div>
+
+      <div class="explain-card">
+        <h4>2. Зөв хариу: [A] 没关系！ (Méi guānxi!)[]</h4>
+        <p>"对不起" (Уучлаарай) гэж хэлсэн хүнд "Зүгээр дээ, гэмгүй, юу ч биш" гэж хариулахдаа "没关系" гэдэг[]. Харин "不客气" гэдэг үг нь дараагийн 2-р хичээл дээр ордог бөгөөд "Баярлалаа"-гийн хариуд "Зүгээр ээ" гэж хэлэх үг юм[].</p>
+      </div>
+
+      <div class="explain-card">
+        <h4>3. Зөв хариу: [A] 1-р тон (55 өндөр түвшин)[]</h4>
+        <p>Ээж гэсэн үг mā нь 1-р тоноор дуудагдана[]. Хэрвээ 3-р тоноор хэлчихвэл mǎ буюу "морь", 4-р тоноор хэлбэл mà буюу "зандрах, уурлах" гэсэн тэс өөр үг болчихдог[]!</p>
+      </div>
+
+      <div class="explain-card">
+        <h4>4. Зөв хариу: [B] Эхний "nǐ" нь 2-р тон болж "ní hǎo" болно[]</h4>
+        <p>Хятад хэлэнд 3-р тонтой хоёр үг зэрэгцэн ороход эхнийх нь ярианд автоматаар 2-р тон (ní hǎo) болж өөрчлөгддөг[]. Гэхдээ пиньинь бичигт анхны 3-р тоны тэмдэглэгээгээрээ бичигддэг[].</p>
+      </div>
+
+      <div class="explain-card">
+        <h4>5. Зөв хариу: [B] yu (цэгийг арилгана)[]</h4>
+        <p>ü эгшиг дангаараа үе үүсгэхдээ урдаа y үсэг авч, дээрх хоёр цэгээ арчаад yu гэж бичигддэг[]. Жишээ нь загас гэдэг үг бол yú[].</p>
+      </div>
+
+      <div class="explain-card">
+        <h4>6. Зөв хариу: [A] Кофе ба Кола[]</h4>
+        <p>kāfēi нь кофе, kělè нь кока кола юм[]. Хятадууд гадаад үгийг өөрсдийн дуудлагадаа тохируулан ингэж нэрлэсэн байдаг[].</p>
+      </div>
+
+      <div class="explain-card">
+        <h4>7. Зөв хариу: [B] 下课！ (Xià kè!)[]</h4>
+        <p>"上课" (Shàng kè) нь хичээл эхлэх үед, харин "下课" (Xià kè) нь хичээл тарах үед хэрэглэгддэг[].</p>
+      </div>
+
+      <div class="explain-card">
+        <h4>8. Зөв хариу: [B] 10[]</h4>
+        <p>Хөндлөн (横) ба босоо (竖) зураасаар бичигдсэн нэмэх (+) тэмдэг шиг "十" ханз бол 10 гэсэн тоо юм[]. "八" нь 8, "六" нь 6 болно[].</p>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    function switchMainTab(idx) {
+      const btns = document.querySelectorAll('.tab-btn');
+      const tabs = document.querySelectorAll('.tab-content');
+      btns.forEach((b, i) => b.classList.toggle('active', i === idx));
+      tabs.forEach((t, i) => t.classList.toggle('active', i === idx));
+    }
+
+    function checkAllQuiz() {
+      const correctAnswers = {
+        q1: { ans: 'B', note: 'Зөв! Багш болон ахмад хүнд "您好" гэж хэлнэ[].' },
+        q2: { ans: 'A', note: 'Зөв! "对不起"-д хариулахдаа "没关系" гэдэг[].' },
+        q3: { ans: 'A', note: 'Зөв! "Ээж" (mā) нь 1-р тон буюу тэгшхэн шулуун аялгатай[].' },
+        q4: { ans: 'B', note: 'Зөв! 3+3 зэрэгцэхэд эхнийх нь 2-р тон болж "ní hǎo" болно[].' },
+        q5: { ans: 'B', note: 'Зөв! ü нь y-тэй нийлэхдээ хоёр цэгээ хаяж "yu" болдог[].' },
+        q6: { ans: 'A', note: 'Зөв! 咖啡 нь кофе, 可乐 нь кола юм[].' },
+        q7: { ans: 'B', note: 'Зөв! Хичээл тарах команд бол "下课"[].' },
+        q8: { ans: 'B', note: 'Зөв! Нэмэх тэмдэг шиг ханз бол "十" буюу 10[].' }
+      };
+
+      for (let key in correctAnswers) {
+        const sel = document.querySelector(`input[name="${key}"]:checked`);
+        const msg = document.getElementById(`f-${key}`);
+        
+        if (!sel) {
+          msg.textContent = 'Хариултаа сонгоорой!';
+          msg.className = 'feedback-msg incorrect';
+          continue;
+        }
+
+        if (sel.value === correctAnswers[key].ans) {
+          msg.textContent = correctAnswers[key].note;
+          msg.className = 'feedback-msg correct';
+        } else {
+          msg.textContent = 'Буруу байна. 3-р таб дээрх тайлбарыг уншаарай!';
+          msg.className = 'feedback-msg incorrect';
+        }
+      }
+    }
+  </script>
+</body>
+</html>
