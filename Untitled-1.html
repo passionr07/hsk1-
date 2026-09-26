@@ -1,0 +1,1438 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Python Бүрэн Санамж (Full Revision Sheets) - Монгол хувилбар</title>
+  <style>
+    * { box-sizing: border-box; font-family: 'Segoe UI', Arial, sans-serif; }
+    body { background-color: #f3f4f8; margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; }
+    
+    /* Дээд цэс */
+    .tabs-nav { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 25px; max-width: 1050px; }
+    .tab-btn { background: #ffffff; border: 2px solid #543b8a; color: #543b8a; padding: 9px 16px; border-radius: 24px; font-weight: bold; cursor: pointer; transition: all 0.2s ease; font-size: 13px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+    .tab-btn:hover { background: #e8e2f7; }
+    .tab-btn.active { background: #543b8a; color: #ffffff; box-shadow: 0 4px 10px rgba(84,59,138,0.3); }
+
+    /* Үндсэн хуудас */
+    .sheet { background: #ffffff; width: 1000px; max-width: 98vw; border: 3px solid #3c2a63; border-radius: 20px; padding: 28px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); display: none; }
+    .sheet.active { display: block; }
+
+    /* Толгой хэсэг */
+    .header { text-align: center; border-bottom: 2px dashed #bbaedd; padding-bottom: 14px; margin-bottom: 20px; position: relative; }
+    .header h1 { margin: 0; color: #2e1d52; font-size: 32px; letter-spacing: 1.5px; text-transform: uppercase; }
+    .header p { margin: 6px 0 0 0; color: #634d94; font-weight: bold; font-size: 17px; }
+
+    /* Хүснэгтэн сүлжээ (Grid) */
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .full-width { grid-column: span 2; }
+
+    /* Хайрцагнууд */
+    .box { border: 2px solid #5f488f; border-radius: 12px; padding: 14px; background: #ffffff; position: relative; }
+    .box-title { display: flex; align-items: center; gap: 8px; font-weight: bold; color: #372063; font-size: 13.5px; margin-bottom: 10px; border-bottom: 1.5px solid #dfd7f3; padding-bottom: 5px; text-transform: uppercase; }
+    .badge { background: #543b8a; color: #ffffff; border-radius: 50%; width: 22px; height: 22px; display: inline-flex; align-items: center; justify-content: center; font-size: 11px; flex-shrink: 0; }
+    
+    /* Жагсаалт, бичвэр */
+    ul { margin: 0; padding-left: 20px; font-size: 12px; color: #2d2d2d; line-height: 1.55; }
+    ol { margin: 0; padding-left: 20px; font-size: 12px; color: #2d2d2d; line-height: 1.55; }
+    li { margin-bottom: 4px; }
+    p { margin: 4px 0; font-size: 12px; line-height: 1.5; color: #2d2d2d; }
+
+    /* Код болон тусгай элементүүд */
+    code { background: #ede7f8; color: #3b1b75; padding: 2px 5px; border-radius: 4px; font-family: 'Consolas', monospace; font-size: 11.5px; }
+    .code-block { background: #fbf9ff; border: 1.5px dashed #8b74ba; border-radius: 8px; padding: 8px 12px; font-family: 'Consolas', monospace; font-size: 12px; margin: 8px 0; color: #311963; line-height: 1.45; }
+    .note-box { background: #fdfaf3; border: 1.5px solid #e8d7a7; border-radius: 8px; padding: 8px 12px; font-size: 11.5px; margin-top: 8px; color: #4d3e13; }
+    .tip-box { background: #f3faff; border: 1.5px solid #a7d8f5; border-radius: 8px; padding: 8px 12px; font-size: 11.5px; margin-top: 8px; color: #0d466b; }
+    .warn-box { background: #fff5f5; border: 1.5px solid #f5b0b0; border-radius: 8px; padding: 8px 12px; font-size: 11.5px; margin-top: 8px; color: #781717; }
+    
+    /* Хүснэгт */
+    table { width: 100%; border-collapse: collapse; font-size: 11px; margin-top: 8px; }
+    th, td { border: 1px solid #cec3ea; padding: 5px 8px; text-align: left; vertical-align: top; }
+    th { background: #ede7fa; color: #29184d; font-weight: bold; }
+    tr:nth-child(even) { background-color: #faf8fe; }
+
+    /* Диаграм */
+    .diagram-container { display: flex; justify-content: space-between; align-items: center; background: #faf8ff; border: 1.5px solid #cdc1eb; border-radius: 10px; padding: 12px 16px; margin-top: 8px; text-align: center; }
+    .diag-item { background: #ffffff; border: 1.5px solid #6c549e; border-radius: 8px; padding: 8px 12px; font-size: 11.5px; font-weight: bold; color: #321d5a; min-width: 110px; box-shadow: 0 2px 4px rgba(0,0,0,0.04); }
+    .diag-arrow { font-size: 20px; color: #7f67b0; font-weight: bold; }
+  </style>
+</head>
+<body>
+
+  <!-- НАВИГАЦИ ТОВЧЛУУРУУД -->
+  <div class="tabs-nav">
+    <button class="tab-btn active" onclick="openTab('tab-basics')">1. Үндэс (Basics)</button>
+    <button class="tab-btn" onclick="openTab('tab-lists')">2. Жагсаалт (Lists)</button>
+    <button class="tab-btn" onclick="openTab('tab-tuples')">3. Табль (Tuples)</button>
+    <button class="tab-btn" onclick="openTab('tab-dicts')">4. Толь бичиг (Dicts)</button>
+    <button class="tab-btn" onclick="openTab('tab-functions')">5. Функц (Functions)</button>
+    <button class="tab-btn" onclick="openTab('tab-import')">6. Модуль татах (Import)</button>
+    <button class="tab-btn" onclick="openTab('tab-libraries')">7. Сангууд (Libraries)</button>
+    <button class="tab-btn" onclick="openTab('tab-files')">8. Файлын систем (File System)</button>
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- 1. PYTHON BASICS -->
+  <!-- ============================================================== -->
+  <div id="tab-basics" class="sheet active">
+    <div class="header">
+      <h1>PYTHON BASICS</h1>
+      <p>Бүрэн давтах тэмдэглэл (Full Revision Notes)</p>
+    </div>
+    <div class="grid">
+      <div class="box">
+        <div class="box-title"><span class="badge">1</span> PYTHON ГЭЖ ЮУ ВЭ? (WHAT IS PYTHON?)</div>
+        <ul>
+          <li>Python бол өндөр түвшний, хөрвүүлэгддэг (interpreted), ерөнхий зориулалтын програмчлалын хэл юм.</li>
+          <li>Анх Гвидо ван Россум (Guido van Rossum) зохиосон.</li>
+          <li>Веб хөгжүүлэлт, автоматжуулалт, дата сайнс, хиймэл оюун (AI), скрипт бичих болон программ хангамж хөгжүүлэлтэд ашиглагддаг.</li>
+          <li><b>Анхлан суралцагчид дурладгийн учир:</b> ойлгомжтой синтакс, уншихад хялбар код, асар баялаг сангийн дэмжлэг, олон платформ дээр ажиллах чадвар.</li>
+        </ul>
+      </div>
+
+      <div class="box">
+        <div class="box-title"><span class="badge">2</span> ГОЛ ОНЦЛОГУУД (KEY FEATURES OF PYTHON)</div>
+        <ul>
+          <li>Унших болон бичихэд хялбар (Easy to read and write)</li>
+          <li>Хөрвүүлэгддэг хэл (Interpreted language)</li>
+          <li>Динамик төрөлтэй (Dynamically typed)</li>
+          <li>Объект хандалтат болон функциональ програмчлалын дэмжлэгтэй</li>
+          <li>Өргөн уудам стандарт сан (Large standard library)</li>
+          <li>Windows, macOS болон Linux дээр жигд ажилладаг</li>
+        </ul>
+      </div>
+
+      <div class="box">
+        <div class="box-title"><span class="badge">3</span> СИНТАКСЫН ҮНДСЭН ДҮРЭМ (BASIC SYNTAX RULES)</div>
+        <ul>
+          <li>Python нь том, жижиг үсгийг ялгадаг (case-sensitive).</li>
+          <li>Кодын блокийг тодорхойлоход зайн догол мөр (indentation) ашигладаг.</li>
+          <li><code>if</code>, <code>for</code>, <code>while</code>, <code>def</code> гэх мэт бүтцийн ард хоёр цэг (:) тавина.</li>
+          <li>Тайлбар (comments) нь <code>#</code> тэмдэгтээр эхэлнэ.</li>
+          <li>Олон мөрт тайлбар эсвэл текстийг гурвалсан хашилтаар (<code>"""</code> эсвэл <code>'''</code>) бичнэ.</li>
+          <li>Үр дүнг дэлгэцэнд хэвлэхдээ <code>print()</code> функцийг ашиглана.</li>
+        </ul>
+        <div class="code-block" style="text-align: center;">print("Hello, Python!")</div>
+      </div>
+
+      <div class="box">
+        <div class="box-title"><span class="badge">4</span> ТҮЛХҮҮР ҮГС БА НЭРШИЛ (KEYWORDS & IDENTIFIERS)</div>
+        <ul>
+          <li><b>Keywords:</b> Хэлэнд урьдчилан тусгайлан зориулагдсан үгс.</li>
+          <li><b>Identifiers:</b> Хувьсагч, функц, класс зэрэгт хөгжүүлэгчийн өгсөн нэршил.</li>
+        </ul>
+        <p><b>Түлхүүр үгсийн жишээ:</b></p>
+        <div class="code-block">if, else, for, while, def, class, return, True, False, None</div>
+        <table>
+          <tr><th>Дүрэм (Rule)</th><th>Жишээ (Example)</th></tr>
+          <tr><td>Үсэг эсвэл _ (доогуур зураас)-аар эхлэх ёстой</td><td><code>name</code>, <code>_total</code></td></tr>
+          <tr><td>Үсэг, тоо, _ агуулж болно</td><td><code>score1</code></td></tr>
+          <tr><td>Тоогоор эхэлж болохгүй</td><td><code>1name</code> ❌</td></tr>
+          <tr><td>Зай болон тусгай тэмдэгт ашиглаж болохгүй</td><td><code>user_name</code> ✔️, <code>user-name</code> ❌</td></tr>
+          <tr><td>Түлхүүр үг байж болохгүй</td><td><code>if</code> ❌</td></tr>
+          <tr><td>Том, жижиг үсэг ялгаатай</td><td><code>age</code> ба <code>Age</code> нь хоёр өөр</td></tr>
+        </table>
+      </div>
+
+      <div class="box">
+        <div class="box-title"><span class="badge">5</span> ХУВЬСАГЧИД (VARIABLES)</div>
+        <p><b>Тодорхойлолт:</b> Хувьсагч нь санах ойд утгыг хадгалдаг нэгж юм.</p>
+        <ul>
+          <li>Python нь динамик төрөлтэй (өгөгдлийн төрлийг урьдчилж зарлах шаардлагагүй).</li>
+          <li>Утга оноох оператор нь <code>=</code> юм.</li>
+        </ul>
+        <div class="code-block">x = 10<br>name = "Alice"<br>price = 19.99<br>is_active = True</div>
+        <div class="note-box">
+          <b>Жижиг санамж (Mini Notes):</b><br>
+          • Олон хувьсагчид зэрэг утга өгөх: <code>a, b = 5, 10</code><br>
+          • Олон хувьсагчид ижил утга өгөх: <code>x = y = z = 0</code><br>
+          • Утга хооронд нь солих (Swapping): <code>a, b = b, a</code><br>
+          • Тогтмол утгын нэршлийн дүрэм: <code>PI = 3.14</code> (Том үсгээр)
+        </div>
+        <p style="margin-top: 6px;">🛒 <b>Бодит амьдралын жишээ:</b> <code>cart_total = 99.99</code> нь дэлгүүрийн нийт төлбөрийн дүнг хадгална.</p>
+      </div>
+
+      <div class="box">
+        <div class="box-title"><span class="badge">6</span> ӨГӨГДЛИЙН ТӨРЛҮҮД (DATA TYPES OVERVIEW)</div>
+        <table>
+          <tr><th>Төрөл (Type)</th><th>Жишээ</th><th>Хэрэглээ (Use)</th></tr>
+          <tr><td><b>int</b></td><td><code>25</code></td><td>Бүхэл тоо</td></tr>
+          <tr><td><b>float</b></td><td><code>3.14</code></td><td>Бутархай тоо</td></tr>
+          <tr><td><b>complex</b></td><td><code>2+3j</code></td><td>Комплекс тооны математик</td></tr>
+          <tr><td><b>str</b></td><td><code>"Python"</code></td><td>Текст өгөгдөл</td></tr>
+          <tr><td><b>bool</b></td><td><code>True</code></td><td>Үнэн/худал логик шийдвэр</td></tr>
+          <tr><td><b>list</b></td><td><code>[1, 2, 3]</code></td><td>Эрэмбэлэгдсэн, засварлагддаг цуглуулга</td></tr>
+          <tr><td><b>tuple</b></td><td><code>(1, 2, 3)</code></td><td>Эрэмбэлэгдсэн, өөрчлөгддөггүй цуглуулга</td></tr>
+          <tr><td><b>set</b></td><td><code>{1, 2, 3}</code></td><td>Зөвхөн давхардалгүй цор ганц утгууд</td></tr>
+          <tr><td><b>dict</b></td><td><code>{"name": "Sam"}</code></td><td>Түлхүүр-утгын хослолууд</td></tr>
+          <tr><td><b>NoneType</b></td><td><code>None</code></td><td>Ямар ч утга байхгүйг заана</td></tr>
+        </table>
+        <div class="tip-box">
+          <code>type(10)</code> ➔ <code>int</code> | <code>type("Hi")</code> ➔ <code>str</code><br>
+          💡 <i>Өгөгдлийн төрлийг шалгахдаа <code>type()</code> функцийг ашиглаарай!</i>
+        </div>
+      </div>
+
+      <div class="box">
+        <div class="box-title"><span class="badge">7</span> ЧУХАЛ САНАМЖУУД (IMPORTANT POINTS)</div>
+        <ul>
+          <li>Python бол динамик төрөлтэй хэл.</li>
+          <li>Зайн догол мөр (indentation) маш чухал ач холбогдолтой.</li>
+          <li>Хувьсагчийн нэр нь утга учиртай, ойлгомжтой байх ёстой.</li>
+          <li>Шийдвэрлэх бодлогодоо үндэслэн хамгийн зөв өгөгдлийн бүтцээ сонгоно уу.</li>
+        </ul>
+      </div>
+
+      <div class="box">
+        <div class="box-title"><span class="badge">8</span> ШАЛГАЛТЫН ЗӨВЛӨМЖ (EXAM TIPS)</div>
+        <ul>
+          <li>⭐ <b>Санах нь:</b> <code>=</code> бол утга оноох, харин <code>==</code> бол харьцуулах оператор.</li>
+          <li>⭐ Python кодын блокт буржгар хаалт хэрэглэдэггүй; зайн догол мөр ашигладаг.</li>
+          <li>⭐ Түлхүүр үгсийг хувьсагчийн нэр болгон хэзээ ч ашиглаж болохгүй.</li>
+          <li>⭐ Boolean утгыг бичихдээ заавал томоор <code>True</code> ба <code>False</code> гэж бичнэ.</li>
+        </ul>
+      </div>
+
+      <div class="box full-width">
+        <div class="box-title"><span class="badge">9</span> АЖИЛЛАХ ЕРӨНХИЙ СХЕМ (TEXT-BASED DIAGRAM)</div>
+        <div class="diagram-container">
+          <div class="diag-item">Хэрэглэгчийн оролт<br>(User Input)</div>
+          <div class="diag-arrow">➔</div>
+          <div class="diag-item">Хувьсагчийн хадгалалт<br>(Variable Storage)</div>
+          <div class="diag-arrow">➔</div>
+          <div class="diag-item">Боловсруулалт<br>(Processing)</div>
+          <div class="diag-arrow">➔</div>
+          <div class="diag-item">Үр дүн / Гаралт<br>(Output)</div>
+        </div>
+        <p style="text-align: right; margin-top: 6px; font-style: italic; color: #555;">Энгийн Python программууд үндсэндээ ингэж ажилладаг.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- 2. PYTHON LISTS -->
+  <!-- ============================================================== -->
+  <div id="tab-lists" class="sheet">
+    <div class="header">
+      <h1>PYTHON LISTS</h1>
+      <p>Жагсаалттай ажиллах бүрэн лавлах</p>
+    </div>
+    <div class="grid">
+      <div class="box">
+        <div class="box-title"><span class="badge">1</span> ТОДОРХОЙЛОЛТ (DEFINITION)</div>
+        <ul>
+          <li>Python дахь List нь эрэмбэлэгдсэн, өөрчлөх боломжтой (mutable) цуглуулга юм.</li>
+          <li>Ямар ч өгөгдлийн төрлийг агуулж болох ба давхардсан утга зөвшөөрөгдөнө.</li>
+          <li>Дөрвөлжин хаалтан дотор <code>[ ]</code> бичигдэнэ.</li>
+        </ul>
+        <div class="code-block">my_list = [10, "python", 3.14, True]<br># int, str, float, bool</div>
+      </div>
+
+      <div class="box">
+        <div class="box-title"><span class="badge">2</span> ГОЛ ОНЦЛОГУУД (KEY FEATURES)</div>
+        <ul>
+          <li><b>Ordered (Эрэмбэлэгдсэн):</b> Элементүүдийн дарааллыг хэвээр хадгална.</li>
+          <li><b>Mutable (Өөрчлөгддөг):</b> Элементийг өөрчлөх, нэмэх, хасах боломжтой.</li>
+          <li><b>Allows Duplicates:</b> Ижил утга олон дахин орж болно.</li>
+          <li><b>Heterogeneous:</b> Төрөл бүрийн өгөгдлийн төрлийг зэрэг хадгална.</li>
+          <li><b>Dynamic Size:</b> Шаардлагатай үед томорч, жижгэрнэ.</li>
+        </ul>
+        <div class="note-box">
+          <b>Бодит амьдралын жишээ:</b><br>
+          • Дэлгүүрийн сагс ➔ Барааны жагсаалт<br>
+          • Сурагчдын дүн ➔ <code>[85, 90, 78, 92]</code><br>
+          • Хөгжмийн тоглуулагч ➔ Дуунуудын жагсаалт
+        </div>
+      </div>
+
+      <div class="box">
+        <div class="box-title"><span class="badge">3</span> ЖАГСААЛТ ҮҮСГЭХ (CREATING LISTS)</div>
+        <div class="code-block">
+empty_list = []                # Хоосон жагсаалт
+numbers = [1, 2, 3, 4, 5]      # Бүхэл тоон жагсаалт
+mixed = [1, "hello", 3.5, True]# Холимог өгөгдлийн төрөл
+duplicates = [1, 2, 2, 3, 1]   # Давхардсан утгатай
+nested = [1, 2, [3, 4], "hi"]  # Дотроо жагсаалт агуулсан (Nested)
+        </div>
+      </div>
+
+      <div class="box">
+        <div class="box-title"><span class="badge">4</span> ЭЛЕМЕНТЭД ХАНДАХ (ACCESSING ELEMENTS)</div>
+        <ul>
+          <li><b>Indexing:</b> Ганц элементэд хандах.</li>
+          <li><b>Slicing:</b> Хэсэг бүлэг элементэд хандах.</li>
+        </ul>
+        <div style="font-family: monospace; font-size: 11px; background:#f4f1fa; padding: 6px; border-radius: 6px; margin: 6px 0;">
+          Эерэг индекс: &nbsp; 0 &nbsp; 1 &nbsp; 2 &nbsp; 3 &nbsp; 4 &nbsp; 5<br>
+          Сөрөг индекс: -6 &nbsp;-5 &nbsp;-4 &nbsp;-3 &nbsp;-2 &nbsp;-1<br>
+          Жагсаалт: &nbsp; &nbsp;[10, 20, 30, 40, 50, 60]
+        </div>
+        <div class="code-block">
+my_list[0]    ➔ 10          my_list[-1]   ➔ 60 (сүүлчийнх)
+my_list[3]    ➔ 40          my_list[-3]   ➔ 40
+my_list[1:4]  ➔ [20, 30, 40] (эхлэл : төгсгөл)
+my_list[:3]   ➔ [10, 20, 30] my_list[3:] ➔ [40, 50, 60]
+my_list[::2]  ➔ [10, 30, 50] (2 алхмаар алгасах)
+        </div>
+        <p style="font-size:11px; color:#666;"><i>Санамж: start : end : step (end индекс өөрөө орохгүй)</i></p>
+      </div>
+
+      <div class="box full-width">
+        <div class="box-title"><span class="badge">5</span> ТҮГЭЭМЭЛ ҮЙЛДЛҮҮД (COMMON OPERATIONS)</div>
+        <table>
+          <tr><th>Үйлдэл</th><th>Бичиглэл (Syntax)</th><th>Жишээ</th><th>Үр дүн</th></tr>
+          <tr><td>Төгсгөлд нэмэх</td><td><code>list.append(x)</code></td><td><code>L = [1, 2]; L.append(3)</code></td><td><code>[1, 2, 3]</code></td></tr>
+          <tr><td>Индекс зааж нэмэх</td><td><code>list.insert(i, x)</code></td><td><code>L.insert(1, 9)</code></td><td><code>[1, 9, 2, 3]</code></td></tr>
+          <tr><td>Жагсаалт залгах</td><td><code>list.extend(iterable)</code></td><td><code>L.extend([4, 5])</code></td><td><code>[1, 2, 3, 4, 5]</code></td></tr>
+          <tr><td>Утгаар нь хасах</td><td><code>list.remove(x)</code></td><td><code>L.remove(9)</code></td><td><code>[1, 2, 3]</code></td></tr>
+          <tr><td>Индексээр хасах</td><td><code>list.pop(i)</code></td><td><code>L.pop(2)</code></td><td><code>[1, 2, 4, 5]</code> (3-ыг буцаана)</td></tr>
+          <tr><td>Бүгдийг арилгах</td><td><code>list.clear()</code></td><td><code>L.clear()</code></td><td><code>[]</code></td></tr>
+          <tr><td>Индексийг олох</td><td><code>list.index(x)</code></td><td><code>L.index(4)</code></td><td><code>3</code></td></tr>
+          <tr><td>Давтамж тоолох</td><td><code>list.count(x)</code></td><td><code>L.count(2)</code></td><td><code>1</code></td></tr>
+          <tr><td>Эрэмбэлэх</td><td><code>list.sort()</code></td><td><code>L.sort()</code></td><td><code>[1, 2, 4, 5]</code></td></tr>
+          <tr><td>Урвуулах</td><td><code>list.reverse()</code></td><td><code>L.reverse()</code></td><td><code>[5, 4, 2, 1]</code></td></tr>
+          <tr><td>Уртыг авах</td><td><code>len(list)</code></td><td><code>len(L)</code></td><td><code>4</code></td></tr>
+        </table>
+      </div>
+
+      <div class="box">
+        <div class="box-title"><span class="badge">6</span> ЖАГСААЛТЫН АРГУУД (METHODS QUICK VIEW)</div>
+        <p><b>Цээжлэх арга: A I E R P C S</b></p>
+        <ul>
+          <li><code>append(x)</code> ➔ төгсгөлд нь x-ийг нэмэх</li>
+          <li><code>insert(i, x)</code> ➔ i индекст x-ийг оруулах</li>
+          <li><code>extend(it)</code> ➔ бүх элементийг залгаж нэмэх</li>
+          <li><code>remove(x)</code> ➔ хамгийн эхний x утгыг устгах</li>
+          <li><code>pop(i)</code> ➔ i индекс дэх утгыг сугалж устгах</li>
+          <li><code>clear()</code> ➔ бүх элементийг бүрэн арилгах</li>
+          <li><code>index(x)</code> ➔ хамгийн эхний x утгын индексийг буцаах</li>
+          <li><code>count(x)</code> ➔ x утга хэдэн удаа давтагдсаныг тоолох</li>
+          <li><code>sort()</code> ➔ жагсаалтыг өсөхөөр эрэмбэлэх</li>
+          <li><code>reverse()</code> ➔ жагсаалтын байрыг урвуулах</li>
+        </ul>
+      </div>
+
+      <div class="box">
+        <div class="box-title"><span class="badge">7</span> LIST COMPREHENSION (БОГИНО БИЧИГЛЭЛ)</div>
+        <p>Жагсаалтыг богино, ойлгомжтой үүсгэх гоёмсог арга.</p>
+        <div class="code-block">new_list = [ expression for item in iterable if condition ]</div>
+        <p><b>Жишээнүүд:</b></p>
+        <div class="code-block">
+squares = [x**2 for x in range(5)]
+# ➔ [0, 1, 4, 9, 16]
+
+even = [x for x in range(10) if x % 2 == 0]
+# ➔ [0, 2, 4, 6, 8]
+        </div>
+        <div class="tip-box">💡 <i>Зөвлөмж: Богино жагсаалтад тохиромжтой, кодыг маш цэвэрхэн болгодог!</i></div>
+      </div>
+
+      <div class="box">
+        <div class="box-title"><span class="badge">8</span> ЧУХАЛ САНАМЖУУД (IMPORTANT POINTS)</div>
+        <ul>
+          <li>Жагсаалт нь mutable тул өөрчлөлт анхны жагсаалтад шууд нөлөөлнө.</li>
+          <li>Индекс нь 0-ээс эхэлдэг.</li>
+          <li>Slicing хийхэд төгсгөлийн индекс өөрөө орохгүй.</li>
+          <li>Олон янзын өгөгдлийг нэг жагсаалтад хольж хадгалж болно.</li>
+          <li>Бэлэн аргуудыг (methods) ашиглах нь илүү хурдан бөгөөд хялбар.</li>
+        </ul>
+        <div class="note-box">💡 <b>Санах ойлголт:</b> Жагсаалт нь өөрөө томрох, жижгэрэх чадвартай, юуг ч хийж болдог савтай адил!</div>
+      </div>
+
+      <div class="box">
+        <div class="box-title"><span class="badge">9</span> LIST vs TUPLE (ЯЛГАА)</div>
+        <table>
+          <tr><th>Үзүүлэлт</th><th>List (Жагсаалт)</th><th>Tuple (Табль)</th></tr>
+          <tr><td>Бичиглэл</td><td><code>[ ]</code></td><td><code>( )</code></td></tr>
+          <tr><td>Өөрчлөгдөх эсэх</td><td>Тийм (Mutable)</td><td>Үгүй (Immutable)</td></tr>
+          <tr><td>Бэлэн аргууд</td><td>Маш олон</td><td>Цөөн</td></tr>
+          <tr><td>Хурд</td><td>Удаан</td><td>Илүү хурдан</td></tr>
+          <tr><td>Хэрэглээ</td><td>Өгөгдөл нь өөрчлөгдөх үед</td><td>Өгөгдөл нь тогтмол байх үед</td></tr>
+        </table>
+      </div>
+
+      <div class="box full-width" style="background: #faf8fe;">
+        <div class="box-title"><span class="badge">10</span> СҮҮЛЧИЙН МИНУТЫН ДАВТАХ САНАМЖ (LAST-MINUTE REVISION)</div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; font-size: 11.5px;">
+          <div>
+            ✔️ Жагсаалт = эрэмбэлэгдсэн, өөрчлөгддөг, давхардал зөвшөөрдөг.<br>
+            ✔️ <code>[ ]</code> хаалтаар үүсгэнэ.<br>
+            ✔️ Индекс 0-ээс эхэлнэ.
+          </div>
+          <div>
+            ✔️ Slicing ашиглах: <code>[start:end:step]</code>.<br>
+            ✔️ Түгээмэл аргууд: <code>append()</code>, <code>insert()</code>, <code>remove()</code>, <code>pop()</code>, <code>clear()</code>, <code>index()</code>, <code>count()</code>, <code>sort()</code>, <code>reverse()</code>.<br>
+            ✔️ List comprehension ашиглан кодыг богино болго.
+          </div>
+          <div>
+            ✔️ Mutable гэдэг нь утга нь бүрэн өөрчлөгддөг гэсэн үг.<br>
+            ✔️ <code>len(list)</code> элементийн нийт тоог буцаана.<br>
+            ✔️ Ямар ч төрлийн өгөгдөл хадгалж болно.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- 3. PYTHON TUPLES -->
+  <!-- ============================================================== -->
+  <div id="tab-tuples" class="sheet">
+    <div class="header">
+      <h1>PYTHON TUPLES</h1>
+      <p>Өөрчлөгддөггүй цуглуулга (Tuples)</p>
+    </div>
+    <div class="grid">
+      <div class="box">
+        <div class="box-title"><span class="badge">1</span> ТОДОРХОЙЛОЛТ (DEFINITION)</div>
+        <ul>
+          <li>Python дахь Tuple нь эрэмбэлэгдсэн, <b>өөрчлөх боломжгүй (immutable)</b> цуглуулга юм.</li>
+          <li>Элементүүд нь дурын төрлийн өгөгдөл байж болно.</li>
+          <li>Давхардсан утгыг зөвшөөрнө.</li>
+          <li>Дугуй хаалтаар <code>( )</code> бичигдэнэ.</li>
+        </ul>
+        <div class="code-block">my_tuple = (10, "Python", 3.14, True)</div>
+      </div>
+
+      <div class="box">
+        <div class="box-title"><span class="badge">2</span> ГОЛ ОНЦЛОГУУД (KEY FEATURES)</div>
+        <ul>
+          <li>✔️ <b>Ordered:</b> Оруулсан дарааллыг хэвээр хадгална.</li>
+          <li>✔️ <b>Immutable:</b> Үүсгэсний дараа өөрчлөх, нэмэх, хасах боломжгүй.</li>
+          <li>✔️ <b>Allows duplicates:</b> Ижил утга давхардаж болно.</li>
+          <li>✔️ <b>Can store mixed data types:</b> Төрөл бүрийн өгөгдөл хольж болно.</li>
+          <li>✔️ <b>Faster and lighter:</b> Ихэнх тохиолдолд жагсаалтаас хурдан бөгөөд хөнгөн.</li>
+        </ul>
+        <div class="note-box">
+          <b>Бодит амьдралын жишээ:</b><br>
+          • RGB өнгө = <code>(255, 0, 0)</code><br>
+          • Байршлын координат = <code>(28.61, 77.21)</code><br>
+          • Амралтын өдрүүд = <code>("Sat", "Sun")</code>
+        </div>
+      </div>
+
+      <div class="box">
+        <div class="box-title"><span class="badge">3</span> ТАБЛЬ ҮҮСГЭХ (CREATING TUPLES)</div>
+        <div class="code-block">
+empty_tuple = ()
+nums = (1, 2, 3, 4)
+mixed = (1, "hello", 3.5, True)
+single = (5,)    # ⚠️ Ганц элементтэй табль үүсгэхэд таслал заавал шаардлагатай!
+nested = (1, 2, (3, 4), "hi")
+        </div>
+      </div>
+
+      <div class="box">
+        <div class="box-title"><span class="badge">4</span> ЭЛЕМЕНТЭД ХАНДАХ (ACCESSING ELEMENTS)</div>
+        <ul>
+          <li><b>Indexing:</b> Ганц элементэд хандах.</li>
+          <li><b>Slicing:</b> Хэсэг мужид хандах.</li>
+        </ul>
+        <div class="code-block">t = (10, 20, 30, 40, 50, 60)</div>
+        <div style="font-family: monospace; font-size: 11px; background:#f4f1fa; padding: 6px; border-radius: 6px; margin: 6px 0;">
+          Эерэг: 0, 1, 2, 3, 4, 5 &nbsp;|&nbsp; Сөрөг: -6, -5, -4, -3, -2, -1
+        </div>
+        <div class="code-block">
+t[0]    ➔ 10          t[-1]   ➔ 60
+t[1:4]  ➔ (20, 30, 40)
+t[:3]   ➔ (10, 20, 30)
+t[::2]  ➔ (10, 30, 50)
+        </div>
+        <p style="font-size:11px; color:#666;"><i>Томьёо: t[index] эсвэл t[start:stop:step] (stop орохгүй)</i></p>
+      </div>
+
+      <div class="box">
+        <div class="box-title"><span class="badge">5</span> ТҮГЭЭМЭЛ ҮЙЛДЛҮҮД (COMMON OPERATIONS)</div>
+        <table>
+          <tr><th>Үйлдэл</th><th>Бичиглэл</th><th>Жишээ</th><th>Үр дүн</th></tr>
+          <tr><td>Залгах (Concatenation)</td><td><code>t1 + t2</code></td><td><code>(1,2)+(3,4)</code></td><td><code>(1,2,3,4)</code></td></tr>
+          <tr><td>Давтах (Repetition)</td><td><code>t * 2</code></td><td><code>(1,2)*2</code></td><td><code>(1,2,1,2)</code></td></tr>
+          <tr><td>Шалгах (Membership)</td><td><code>x in t</code></td><td><code>2 in (1,2,3)</code></td><td><code>True</code></td></tr>
+          <tr><td>Урт (Length)</td><td><code>len(t)</code></td><td><code>len((1,2,3))</code></td><td><code>3</code></td></tr>
+          <tr><td>Хамгийн бага утга</td><td><code>min(t)</code></td><td><code>min((4,2,8))</code></td><td><code>2</code></td></tr>
+          <tr><td>Хамгийн их утга</td><td><code>max(t)</code></td><td><code>max((4,2,8))</code></td><td><code>8</code></td></tr>
+        </table>
+      </div>
+
+      <div class="box">
+        <div class="box-title"><span class="badge">6</span> ТАБЛИЙН АРГУУД (TUPLE METHODS)</div>
+        <ul>
+          <li><code>count(x)</code> ➔ x утга хэдэн удаа орсныг тоолно.</li>
+          <li><code>index(x)</code> ➔ x утгын анх гарч ирсэн индексийг буцаана.</li>
+        </ul>
+        <div class="code-block">
+(1, 2, 2, 3).count(2)  ➔ 2
+("a", "b", "c").index("b") ➔ 1
+        </div>
+        <div class="tip-box">💡 <b>Зөвлөмж:</b> Табль нь өөрчлөгддөггүй (immutable) тул маш цөөхөн аргатай байдаг.</div>
+      </div>
+
+      <div class="box">
+        <div class="box-title"><span class="badge">7</span> БАГЛАХ БА ЗАДЛАХ (PACKING & UNPACKING)</div>
+        <ul>
+          <li><b>Packing:</b> Олон утгыг нэг табль болгон баглах.</li>
+          <li><b>Unpacking:</b> Таблийн утгуудыг хувьсагчдад салгаж оноох.</li>
+        </ul>
+        <div class="code-block">
+# Баглах (Packing)
+point = (4, 5)
+
+# Задлах (Unpacking)
+x, y = point  # x = 4, y = 5
+
+a, b, c = (1, 2, 3)
+        </div>
+        <div class="note-box">🧠 <b>Санах арга:</b> Packing = утгуудыг нэгтгэх, Unpacking = утгуудыг салгах.</div>
+      </div>
+
+      <div class="box">
+        <div class="box-title"><span class="badge">8</span> TUPLE vs LIST ХАРЬЦУУЛАЛТ</div>
+        <table>
+          <tr><th>Үзүүлэлт</th><th>Tuple</th><th>List</th></tr>
+          <tr><td>Бичиглэл</td><td><code>( )</code></td><td><code>[ ]</code></td></tr>
+          <tr><td>Өөрчлөгдөх эсэх</td><td>Үгүй (No)</td><td>Тийм (Yes)</td></tr>
+          <tr><td>Бэлэн аргууд</td><td>Цөөн</td><td>Олон</td></tr>
+          <tr><td>Хурд</td><td>Илүү хурдан</td><td>Удаан</td></tr>
+          <tr><td>Тохирох хэрэглээ</td><td>Тогтмол өгөгдөл</td><td>Өөрчлөгдөх өгөгдөл</td></tr>
+          <tr><td>Жишээ</td><td>Координат</td><td>Дэлгүүрийн сагс</td></tr>
+        </table>
+      </div>
+
+      <div class="box">
+        <div class="box-title"><span class="badge">9</span> ЧУХАЛ САНАМЖУУД (IMPORTANT POINTS)</div>
+        <ul>
+          <li>Табль нь immutable тул элементийг шууд нэмэх, хасах, засах боломжгүй.</li>
+          <li>Ганц элементтэй үед ард нь таслал заавал тавина: <code>(5,)</code>.</li>
+          <li>Дотроо өөр табль агуулж (nested) болно.</li>
+          <li>Элементүүд нь immutable байвал толь бичгийн түлхүүр (dictionary key) болгон ашиглаж болно.</li>
+          <li>Өгөгдлийг өөрчлөгдөхгүйгээр хамгаалахыг хүсвэл Tuple-ийг сонгоорой.</li>
+        </ul>
+      </div>
+
+      <div class="box">
+        <div class="box-title"><span class="badge">10</span> ШАЛГАЛТЫН ТОВЧ МЭДЛЭГ (EXAM TIPS)</div>
+        <ul>
+          <li>✔️ Tuple = дугуй хаалт <code>()</code>.</li>
+          <li>✔️ Өөрчлөгдөх үү? Үгүй. Эрэмбэлэгдсэн үү? Тийм. Давхардал зөвшөөрөх үү? Тийм.</li>
+          <li>✔️ Ганц элементтэй табль = <code>(5,)</code>.</li>
+          <li>✔️ Slicing хийхэд төгсгөлийн индекс өөрөө орохгүй.</li>
+          <li>✔️ Үндсэн аргууд нь ердөө <code>count()</code> ба <code>index()</code>.</li>
+        </ul>
+      </div>
+
+      <div class="box full-width" style="background:#faf8fe;">
+        <div class="box-title"><span class="badge">11</span> СҮҮЛЧИЙН МИНУТЫН ДАВТАХ САНАМЖ (LAST-MINUTE REVISION)</div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; font-size:12px;">
+          <div>
+            ✔️ Tuple = ordered + immutable + allows duplicates.<br>
+            ✔️ <code>( )</code> хаалтаар үүсгэнэ.<br>
+            ✔️ Индекс болон slicing ашиглан хандана.
+          </div>
+          <div>
+            ✔️ Түгээмэл аргууд: <code>count()</code>, <code>index()</code>.<br>
+            ✔️ Координат, RGB өнгө, тогтмол бүртгэлд хамгийн тохиромжтой.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- 4. PYTHON DICTIONARIES -->
+  <!-- ============================================================== -->
+  <div id="tab-dicts" class="sheet">
+    <div class="header">
+      <h1>PYTHON DICTIONARIES</h1>
+      <p>Түлхүүр - Утгын хослол бүхий бүтэц</p>
+    </div>
+    <div class="grid">
+      <div class="box">
+        <div class="box-title"><span class="badge">1</span> ТОДОРХОЙЛОЛТ (DEFINITION)</div>
+        <ul>
+          <li>Python дахь толь бичиг нь түлхүүр-утгын (key-value) хослолоос бүрдсэн эрэмбэгүй/mapping цуглуулга юм.</li>
+          <li>Өөрчлөх боломжтой (Mutable).</li>
+          <li>Түлхүүрүүд нь цор ганц (давхардалгүй) байх ёстой.</li>
+          <li>Буржгар хаалтаар <code>{ }</code> бичигдэнэ.</li>
+          <li>Утгууд нь (values) давхардаж болно.</li>
+        </ul>
+        <div class="code-block">my_dict = {"name": "Alice", "age": 21, "city": "NYC"}</div>
+      </div>
+
+      <div class="box">
+        <div class="box-title"><span class="badge">2</span> ГОЛ ОНЦЛОГУУД (KEY FEATURES)</div>
+        <ul>
+          <li>✔️ Өгөгдлийг <code>түлхүүр : утга</code> байдлаар хадгална.</li>
+          <li>✔️ Өөрчлөх, нэмэх, хасах боломжтой (Mutable).</li>
+          <li>✔️ Түлхүүрүүд нь давтагдашгүй цор ганц байна.</li>
+          <li>✔️ Түлхүүрээр маш хурдан хайж олдог (Fast lookup).</li>
+          <li>✔️ Төрөл бүрийн өгөгдөл хадгална.</li>
+          <li>✔️ Дотроо толь бичиг агуулж болно (Nested).</li>
+        </ul>
+        <div class="note-box">
+          <b>Бодит амьдралын жишээ:</b><br>
+          • Оюутны анкет (Student record)<br>
+          • Бүтээгдэхүүний дэлгэрэнгүй (Product details)<br>
+          • Утасны лавлах (Phone contacts)
+        </div>
+      </div>
+
+      <div class="box">
+        <div class="box-title"><span class="badge">3</span> ТОЛЬ БИЧИГ ҮҮСГЭХ (CREATING DICTIONARIES)</div>
+        <div class="code-block">
+empty_dict = {}
+student = {"name": "Sam", "marks": 90}
+mixed = {1: "one", "pi": 3.14, "active": True}
+nested = {"user": {"name": "Ana", "age": 22}}
+        </div>
+      </div>
+
+      <div class="box">
+        <div class="box-title"><span class="badge">4</span> УТГАД ХАНДАХ БА ШИНЭЧЛЭХ</div>
+        <div class="code-block">
+student["name"]          # Хаалтаар хандах ➔ утгыг авна
+student.get("marks")     # get() ➔ түлхүүр байхгүй бол алдаа өгөхөөс сэргийлнэ
+student["grade"] = "A"   # Нэмэх эсвэл шинэчлэх
+student["marks"] = 95
+del student["grade"]     # Устгах
+        </div>
+        <div class="note-box">
+          <b>Томьёоны хайрцаг:</b><br>
+          • Хандах: <code>d[key]</code><br>
+          • Аюулгүй хандах: <code>d.get(key)</code><br>
+          • Нэмэх/Засах: <code>d[key] = value</code><br>
+          • Устгах: <code>del d[key]</code>
+        </div>
+      </div>
+
+      <div class="box full-width">
+        <div class="box-title"><span class="badge">5</span> ТҮГЭЭМЭЛ ҮЙЛДЛҮҮД (COMMON OPERATIONS)</div>
+        <table>
+          <tr><th>Үйлдэл</th><th>Бичиглэл</th><th>Жишээ</th><th>Үр дүн</th></tr>
+          <tr><td>Шинэ элемент нэмэх</td><td><code>d[key] = value</code></td><td><code>d["city"] = "NYC"</code></td><td><code>{"city": "NYC", ...}</code></td></tr>
+          <tr><td>Утга шинэчлэх</td><td><code>d[key] = value</code></td><td><code>d["age"] = 22</code></td><td>нас 22 болж шинэчлэгдэнэ</td></tr>
+          <tr><td>Элемент устгах</td><td><code>del d[key]</code></td><td><code>del d["age"]</code></td><td>нас устгагдана</td></tr>
+          <tr><td>Урт олох</td><td><code>len(d)</code></td><td><code>len(d)</code></td><td><code>3</code></td></tr>
+          <tr><td>Түлхүүр шалгах</td><td><code>key in d</code></td><td><code>"name" in d</code></td><td><code>True</code></td></tr>
+          <tr><td>Бүх түлхүүрийг авах</td><td><code>d.keys()</code></td><td><code>d.keys()</code></td><td><code>dict_keys([...])</code></td></tr>
+          <tr><td>Бүх утгыг авах</td><td><code>d.values()</code></td><td><code>d.values()</code></td><td><code>dict_values([...])</code></td></tr>
+          <tr><td>Хослолуудыг авах</td><td><code>d.items()</code></td><td><code>d.items()</code></td><td><code>dict_items([...])</code></td></tr>
+        </table>
+      </div>
+
+      <div class="box">
+        <div class="box-title"><span class="badge">6</span> ТОЛЬ БИЧГИЙН АРГУУД (METHODS)</div>
+        <ul>
+          <li><code>keys()</code> ➔ бүх түлхүүрүүдийг буцаана</li>
+          <li><code>values()</code> ➔ бүх утгуудыг буцаана</li>
+          <li><code>items()</code> ➔ (түлхүүр, утга) хосуудыг буцаана</li>
+          <li><code>get(key, default=None)</code> ➔ утга эсвэл анхдагч утгыг буцаана</li>
+          <li><code>update(other_dict)</code> ➔ өөр толь бичгээс нэмж шинэчлэх</li>
+          <li><code>pop(key, default=None)</code> ➔ түлхүүрийг устгаж утгыг буцаана</li>
+          <li><code>clear()</code> ➔ бүх элементүүдийг цэвэрлэх</li>
+          <li><code>copy()</code> ➔ өнгөц хуулбар (shallow copy) үүсгэх</li>
+        </ul>
+        <div class="tip-box">💡 <b>Зөвлөмж:</b> Түлхүүр байхгүй байх магадлалтай үед алдаа гаргахгүйн тулд <code>get()</code> ашиглаарай.</div>
+      </div>
+
+      <div class="box">
+        <div class="box-title"><span class="badge">7</span> ДАВТАЛТ ХИЙХ (ITERATING)</div>
+        <div class="code-block">
+# Түлхүүрүүдээр давтах
+for key in d:
+    print(key)
+
+# Утгуудаар давтах
+for value in d.values():
+    print(value)
+
+# Түлхүүр ба утгаар зэрэг давтах
+for k, v in d.items():
+    print(k, "=", v)
+        </div>
+        <div class="note-box">🧠 <b>Санах арга:</b> <code>items()</code> нь түлхүүр ба утгыг хоёуланг нь олгоно.</div>
+      </div>
+
+      <div class="box">
+        <div class="box-title"><span class="badge">8</span> DICTIONARY vs LIST ХАРЬЦУУЛАЛТ</div>
+        <table>
+          <tr><th>Үзүүлэлт</th><th>Dictionary</th><th>List</th></tr>
+          <tr><td>Бичиглэл</td><td><code>{key : value}</code></td><td><code>[ ]</code></td></tr>
+          <tr><td>Өгөгдлийн хэлбэр</td><td>Түлхүүр-утгын холбоос (Mapping)</td><td>Эрэмбэлэгдсэн дараалал</td></tr>
+          <tr><td>Хандах арга</td><td>Түлхүүрээр (By key)</td><td>Индексээр (0, 1, 2...)</td></tr>
+          <tr><td>Давхардал</td><td>Түлхүүр нь давтагдахгүй</td><td>Давхардал зөвшөөрөгдөнө</td></tr>
+          <tr><td>Тохирох хэрэглээ</td><td>Шошготой, холбоост өгөгдөл</td><td>Дараалсан зүйлс хадгалах</td></tr>
+        </table>
+      </div>
+
+      <div class="box">
+        <div class="box-title"><span class="badge">9</span> ЧУХАЛ САНАМЖУУД (IMPORTANT POINTS)</div>
+        <ul>
+          <li>Толь бичиг нь өөрчлөгддөг (mutable).</li>
+          <li>Түлхүүрүүд нь цор ганц байна.</li>
+          <li>Түлхүүр нь заавал immutable төрөл (str, int, tuple) байна.</li>
+          <li>Утга нь ямар ч төрлийн өгөгдөл байж болно.</li>
+          <li>Байхгүй түлхүүрийг <code>d[key]</code> гэж дуудвал <code>KeyError</code> алдаа заана.</li>
+        </ul>
+      </div>
+
+      <div class="box">
+        <div class="box-title"><span class="badge">10</span> ШАЛГАЛТЫН ТОВЧ МЭДЛЭГ (EXAM TIPS)</div>
+        <ul>
+          <li>✔️ Санах нь: Dictionary = key-value хослол.</li>
+          <li>✔️ Буржгар хаалт <code>{ }</code> ашиглана.</li>
+          <li>✔️ Түлхүүр давтагдахгүй цор ганц байх ёстой.</li>
+          <li>✔️ Аюулгүй хандахын тулд <code>get()</code> ашигла.</li>
+          <li>✔️ Жагсаалт нь индекс ашигладаг бол толь бичиг нь түлхүүр ашигладаг.</li>
+        </ul>
+      </div>
+
+      <div class="box full-width" style="background:#faf8fe;">
+        <div class="box-title"><span class="badge">11</span> СҮҮЛЧИЙН МИНУТЫН ДАВТАХ САНАМЖ</div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; font-size:12px;">
+          <div>
+            ✔️ Dictionary = эрэмбэгүй түлхүүр-утгын цуглуулга.<br>
+            ✔️ Mutable буюу өөрчлөх боломжтой.<br>
+            ✔️ Түлхүүр нь цор ганц, харин утга нь давхардаж болно.<br>
+            ✔️ <code>{ }</code> хаалтаар үүсгэнэ.
+          </div>
+          <div>
+            ✔️ <code>d[key]</code> эсвэл <code>d.get(key)</code>-ээр хандана.<br>
+            ✔️ <code>keys()</code>, <code>values()</code>, <code>items()</code>-ээр давтана.<br>
+            ✔️ Анкетийн мэдээлэл, тохиргооны хувьсагчид хадгалахад төгс тохирно!
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- 5. PYTHON FUNCTIONS -->
+  <!-- ============================================================== -->
+  <div id="tab-functions" class="sheet">
+    <div class="header">
+      <h1>PYTHON FUNCTIONS</h1>
+      <p>Функц тодорхойлох ба ашиглах лавлах</p>
+    </div>
+    <div class="grid">
+      <div class="box">
+        <div class="box-title"><span class="badge">1</span> ФУНКЦ ГЭЖ ЮУ ВЭ? (WHAT IS A FUNCTION?)</div>
+        <ul>
+          <li>Функц нь тодорхой нэгэн ажлыг гүйцэтгэдэг дахин ашиглагдах кодын блок юм.</li>
+          <li>Код дахин давтагдахаас сэргийлж, кодыг уншиж ойлгоход хялбар болгодог.</li>
+          <li>Зөвхөн тусгайлан дуудсан үед л ажилладаг.</li>
+        </ul>
+        <div class="note-box">
+          📖 <b>Бодит амьдралын жишээ:</b> Функцийг хоолны жортой зүйрлэж болно. Та жорыг нэг удаа бичээд хэрэгтэй үедээ хэдэн ч удаа дахин ашиглаж хоолоо хийж болно.
+        </div>
+      </div>
+
+      <div class="box">
+        <div class="box-title"><span class="badge">2</span> СИНТАКС (SYNTAX)</div>
+        <div class="code-block">
+def function_name(parameters):
+    """Docstring (Тайлбар - заавал биш)"""
+    # кодын блок
+    return value  # буцаах утга - заавал биш
+        </div>
+        <ul>
+          <li><code>def</code> нь функц тодорхойлох түлхүүр үг.</li>
+          <li><code>function_name</code> нь нэршлийн дүрмийг баримтална.</li>
+          <li><code>parameters</code> нь функцэд дамжуулах оролтын утгууд.</li>
+          <li><code>return</code> нь тооцооллын үр дүнг дуудсан газарт буцаана.</li>
+        </ul>
+      </div>
+
+      <div class="box">
+        <div class="box-title"><span class="badge">3</span> ФУНКЦИЙН ТӨРЛҮҮД (TYPES OF FUNCTIONS)</div>
+        <ul>
+          <li><b>Суурилагдсан (Built-in Functions):</b> Python-д бэлэн байдаг функцууд: <code>print()</code>, <code>len()</code>, <code>type()</code>.</li>
+          <li><b>Хэрэглэгчийн тодорхойлсон (User-defined Functions):</b> Хөгжүүлэгч <code>def</code> түлхүүр үгээр өөрөө үүсгэсэн функцууд.</li>
+          <li><b>Ламбда функц (Lambda Functions):</b> <code>lambda</code> түлхүүр үгээр бичигддэг жижиг нэргүй функцууд.</li>
+        </ul>
+      </div>
+
+      <div class="box">
+        <div class="box-title"><span class="badge">4</span> ФУНКЦ ҮҮСГЭХ БА ДУУДАХ</div>
+        <div class="code-block">
+def greet(name):
+    """Энэ функц хэрэглэгчтэй мэндчилнэ."""
+    print(f"Hello, {name}!")
+    return "Done"
+
+# Функцийг дуудах
+greet("Alice")         # Гаралт: Hello, Alice!
+result = greet("Bob")  # Гаралт: Hello, Bob!
+print(result)          # Гаралт: Done
+        </div>
+        <div class="tip-box">💡 <b>Санах зарчим:</b> Нэг удаа тодорхойл, олон удаа ашигла (Define once, Use many times)!</div>
+      </div>
+
+      <div class="box">
+        <div class="box-title"><span class="badge">5</span> ФУНКЦИЙН ПАРАМЕТРҮҮД (PARAMETERS)</div>
+        <table>
+          <tr><th>Төрөл</th><th>Жишээ</th></tr>
+          <tr><td>Параметргүй</td><td><code>def hello(): print("Hi")</code></td></tr>
+          <tr><td>Параметртэй</td><td><code>def add(a, b): return a + b</code></td></tr>
+          <tr><td>Анхдагч утгатай</td><td><code>def greet(name="Guest"): print(f"Hello, {name}!")</code></td></tr>
+          <tr><td>Нэртэй аргумент</td><td><code>def info(name, age): print(name, age)<br>info(age=20, name="Tom")</code></td></tr>
+          <tr><td>Хувьсах аргумент (<code>*args</code>)</td><td><code>def total(*numbers): return sum(numbers)</code></td></tr>
+          <tr><td>Хувьсах түлхүүрт (<code>**kwargs</code>)</td><td><code>def details(**info): return info</code></td></tr>
+        </table>
+      </div>
+
+      <div class="box">
+        <div class="box-title"><span class="badge">6</span> RETURN БҮТЭЦ БА RETURN vs PRINT</div>
+        <ul>
+          <li><code>return</code> нь үр дүнг дуудсан газарт буцаана. Хэрэв return байхгүй бол функц автоматаар <code>None</code> буцаана.</li>
+        </ul>
+        <div class="code-block">
+def square(x):
+    return x * x
+
+print(square(5))  # 25
+        </div>
+        <table>
+          <tr><th>Үзүүлэлт</th><th>return</th><th>print()</th></tr>
+          <tr><td>Зориулалт</td><td>Үр дүнг дуудагчид буцаана</td><td>Дэлгэцэнд үр дүнг харуулна</td></tr>
+          <tr><td>Илэрхийлэлд орох</td><td>Тийм (Тооцоололд ашиглаж болно)</td><td>Үгүй (Утга хадгалахгүй)</td></tr>
+          <tr><td>Харагдах байдал</td><td>Автоматаар харагдахгүй</td><td>Дэлгэцэнд шууд харагдана</td></tr>
+        </table>
+      </div>
+
+      <div class="box">
+        <div class="box-title"><span class="badge">7</span> LAMBDA ФУНКЦ (НЭРГҮЙ ФУНКЦ)</div>
+        <ul>
+          <li>Нэг мөрөнд бичигддэг, нэргүй жижиг функц.</li>
+          <li><code>lambda</code> түлхүүр үгээр үүсгэгдэнэ.</li>
+        </ul>
+        <div class="code-block">
+add = lambda a, b: a + b
+print(add(3, 4))  # 7
+        </div>
+        <div class="tip-box">💡 <b>Хэзээ ашиглах вэ:</b> Нэг удаа ашиглагдах богино логикт хамгийн тохиромжтой.</div>
+      </div>
+
+      <div class="box">
+        <div class="box-title"><span class="badge">8</span> ХУВЬСАГЧИЙН ХҮРЭЭ (SCOPE OF VARIABLES)</div>
+        <table>
+          <tr><th>Хүрээ (Scope)</th><th>Тайлбар</th></tr>
+          <tr><td><b>Local (Функц доторх)</b></td><td>Зөвхөн тухайн функц дотор тодорхойлогдсон бөгөөд гаднаас нь хандах боломжгүй.</td></tr>
+          <tr><td><b>Global (Функцийн гаднах)</b></td><td>Бүх функцийн гадна тодорхойлогдсон бөгөөд кодын хаанаас ч хандаж болно.</td></tr>
+        </table>
+        <div class="note-box">💡 <i>Зөвлөмж: Функц дотроос global хувьсагчийг өөрчлөхийн тулд <code>global</code> түлхүүр үгийг ашиглана (болгоомжтой ашиглах).</i></div>
+      </div>
+
+      <div class="box full-width">
+        <div class="box-title"><span class="badge">9</span> ТҮГЭЭМЭЛ ЖИШЭЭНҮҮД (COMMON EXAMPLES)</div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+          <div class="code-block">
+# 1. Параметргүй, return-гүй
+def say_hello():
+    print("Hello Python!")
+
+# 2. Параметртэй ба return-тэй
+def add(a, b):
+    return a + b
+
+# 3. Анхдагч утгатай параметр
+def power(x, p=2):
+    return x ** p
+          </div>
+          <div class="code-block">
+# 4. *args жишээ (Олон утга)
+def total(*nums):
+    return sum(nums)
+
+# 5. **kwargs жишээ (Олон түлхүүр-утга)
+def show_info(**info):
+    for key, value in info.items():
+        print(key, ":", value)
+          </div>
+        </div>
+      </div>
+
+      <div class="box">
+        <div class="box-title"><span class="badge">10</span> ЧУХАЛ САНАМЖУУД (IMPORTANT POINTS)</div>
+        <ul>
+          <li>Функц нь кодын дахин ашиглагдах чадварыг сайжруулдаг.</li>
+          <li>Функцийн нэршил тодорхой, учир утгатай байх ёстой.</li>
+          <li>Функцийг аль болох цомхон, зөвхөн нэг л зүйлийг хийдэг байхаар зохио.</li>
+          <li>Үр дүнг буцаахад <code>return</code> ашигла.</li>
+          <li><b>DRY зарчмыг баримтал:</b> Don't Repeat Yourself (Өөрийгөө бүү давт).</li>
+        </ul>
+      </div>
+
+      <div class="box">
+        <div class="box-title"><span class="badge">11</span> СҮҮЛЧИЙН МИНУТЫН ДАВТАХ САНАМЖ</div>
+        <ul>
+          <li>✔️ <code>def</code> түлхүүр үгээр тодорхойлно.</li>
+          <li>✔️ Нэрээр нь дуудаж ажиллуулна.</li>
+          <li>✔️ Параметрүүд нь функцийн оролт болдог.</li>
+          <li>✔️ <code>*args</code> = хувьсах дараалсан аргументууд.</li>
+          <li>✔️ <code>**kwargs</code> = хувьсах түлхүүртэй аргументууд.</li>
+          <li>✔️ Local scope дотор, Global scope гадна байна.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- 6. PYTHON IMPORT -->
+  <!-- ============================================================== -->
+  <div id="tab-import" class="sheet">
+    <div class="header">
+      <h1>PYTHON IMPORT</h1>
+      <p>Модуль болон сангуудыг холбох лавлах</p>
+    </div>
+    <div class="grid">
+      <div class="box">
+        <div class="box-title"><span class="badge">1</span> ИМПОРТ ГЭЖ ЮУ ВЭ? (WHAT IS IMPORT?)</div>
+        <ul>
+          <li><code>import</code> нь Python-д бэлэн байгаа модулиудыг дуудаж ашиглахад хэрэглэгдэнэ.</li>
+          <li><b>Модуль</b> гэдэг нь Python код (функц, класс, хувьсагч) агуулсан <code>.py</code> өргөтгөлтэй файл юм.</li>
+          <li>Энэ нь кодын зохион байгуулалт болон дахин ашиглалтыг дэмждэг.</li>
+        </ul>
+        <div class="note-box">
+          🧰 <b>Бодит амьдралын жишээ:</b> Модулиудыг багажны хайрцаг дахь салангид багажууд гэж төсөөл. Та зөвхөн ажилдаа шаардлагатай байгаа тэр л багажаа сонгож авч ашигладаг.
+        </div>
+      </div>
+
+      <div class="box">
+        <div class="box-title"><span class="badge">2</span> СИНТАКС (SYNTAX)</div>
+        <div class="code-block">
+import module_name
+from module_name import name1, name2, ...
+from module_name import *
+import module_name as alias
+from module_name import name as alias
+        </div>
+        <ul>
+          <li><code>module_name</code> ➔ модулийн нэр (файлын нэр).</li>
+          <li><code>alias</code> ➔ модуль эсвэл функцэд өгч буй товчилсон нэр (заавал биш).</li>
+        </ul>
+      </div>
+
+      <div class="box full-width">
+        <div class="box-title"><span class="badge">3</span> ИМПОРТЫН ТӨРЛҮҮД (TYPES OF IMPORT)</div>
+        <table>
+          <tr><th>Төрөл</th><th>Синтакс</th><th>Жишээ</th><th>Зориулалт</th></tr>
+          <tr><td>1. Модулийг бүтнээр оруулах</td><td><code>import module_name</code></td><td><code>import math</code></td><td>Бүхэл бүтэн модулийг оруулж ирнэ.</td></tr>
+          <tr><td>2. Тодорхой зүйлсийг оруулах</td><td><code>from module_name import name1, name2</code></td><td><code>from math import sqrt, pi</code></td><td>Зөвхөн хэрэгтэй функцуудыг сугалж оруулна.</td></tr>
+          <tr><td>3. Бүгдийг шууд оруулах</td><td><code>from module_name import *</code></td><td><code>from math import *</code></td><td>Бүх зүйлийг одоогийн кодонд шууд оруулна.</td></tr>
+          <tr><td>4. Модульд товч нэр өгөх</td><td><code>import module_name as alias</code></td><td><code>import numpy as np</code></td><td>Модульд богино товчилсон нэр онооно.</td></tr>
+          <tr><td>5. Элементэд товч нэр өгөх</td><td><code>from module_name import name as alias</code></td><td><code>from math import sqrt as square_root</code></td><td>Тодорхой функцэд товч нэр онооно.</td></tr>
+        </table>
+      </div>
+
+      <div class="box">
+        <div class="box-title"><span class="badge">4</span> КОДЫН ЖИШЭЭНҮҮД (EXAMPLES)</div>
+        <div class="code-block">
+# 1. Модулийг бүтнээр татах
+import math
+print(math.pi)              # 3.141592653589793
+
+# 2. Тусгай элементүүдийг татах
+from math import sqrt, pi
+print(sqrt(16))             # 4.0
+print(pi)                   # 3.141592653589793
+
+# 3. Бүгдийг шууд татах
+from math import *
+print(sin(pi/2))            # 1.0
+
+# 4. Товчилсон нэрээр татах
+import numpy as np
+arr = np.array([1, 2, 3])
+print(arr)                  # [1 2 3]
+
+# 5. Функцэд товч нэр өгөх
+from math import sqrt as sq
+print(sq(25))               # 5.0
+        </div>
+        <div class="tip-box">💡 <i>Зөвлөмж: Бүх зүйлийг биш, зөвхөн өөрт хэрэгтэй байгаагаа л импорт хийгээрэй!</i></div>
+      </div>
+
+      <div class="box">
+        <div class="box-title"><span class="badge">5</span> ТҮГЭЭМЭЛ МОДУЛИУД (COMMONLY USED)</div>
+        <ul>
+          <li><code>math</code> ➔ Математик функцууд (sqrt, sin, cos, log г.м)</li>
+          <li><code>random</code> ➔ Санамсаргүй тоо үүсгэх (randint, choice, shuffle)</li>
+          <li><code>datetime</code> ➔ Огноо болон цаг хугацаатай ажиллах</li>
+          <li><code>os</code> ➔ Үйлдлийн системтэй холбогдох (файл, хавтас, замууд)</li>
+          <li><code>sys</code> ➔ Системийн функцууд (exit, platform, path)</li>
+          <li><code>re</code> ➔ Regular expressions (текстээс загвараар хайх)</li>
+          <li><code>json</code> ➔ JSON өгөгдөл боловсруулах</li>
+          <li><code>builtins</code> ➔ Python-ийн суурилагдсан бэлэн функцууд</li>
+        </ul>
+      </div>
+
+      <div class="box">
+        <div class="box-title"><span class="badge">6</span> IMPORT vs FROM...IMPORT</div>
+        <table>
+          <tr><th>Шинж чанар</th><th>import module</th><th>from module import item</th></tr>
+          <tr><td>Хандах хэлбэр</td><td><code>module.item</code></td><td>Шууд <code>item</code> гэж дуудна</td></tr>
+          <tr><td>Уншигдах байдал</td><td>Урт боловч тодорхой</td><td>Богино, шууд</td></tr>
+          <tr><td>Хэзээ хэрэглэх</td><td>Олон функц ашиглах үед</td><td>Цөөн хэдхэн функц ашиглахад</td></tr>
+          <tr><td>Жишээ</td><td><code>import math<br>print(math.sqrt(9))</code></td><td><code>from math import sqrt<br>print(sqrt(9))</code></td></tr>
+        </table>
+      </div>
+
+      <div class="box">
+        <div class="box-title"><span class="badge">7</span> МОДУЛЬ ХАЙХ ДАРААЛАЛ (SEARCH PATH)</div>
+        <p>Python нь дуудаж буй модулийг дараах дэс дарааллаар хайдаг:</p>
+        <ol>
+          <li>Одоогийн ажиллаж буй хавтас (Current directory)</li>
+          <li>Python-ийн стандарт сангийн хавтас (Standard Library)</li>
+          <li>Суулгасан сангуудын хавтас (site-packages)</li>
+          <li><code>PYTHONPATH</code> орчны хувьсагч дээр заасан замууд</li>
+        </ol>
+        <div class="tip-box">💡 <i>Том төслүүдэд төөрөгдлөөс сэргийлэхийн тулд бүтэн замыг (absolute import) ашиглаарай.</i></div>
+      </div>
+
+      <div class="box">
+        <div class="box-title"><span class="badge">8</span> ӨӨРИЙН МОДУЛИЙГ ИМПОРТЛОХ</div>
+        <p>Та өөрийн бичсэн <code>.py</code> файлыг модуль болгон оруулж болно.</p>
+        <div class="code-block">
+# mymodule.py файл дотор:
+def greet(name):
+    return f"Hello, {name}!"
+
+# main.py файл дотор:
+import mymodule
+print(mymodule.greet("Alice"))  # Hello, Alice!
+        </div>
+        <p style="font-size:11px; color:#555;"><i>(Файлууд нэг хавтас дотор байх шаардлагатай)</i></p>
+      </div>
+
+      <div class="box">
+        <div class="box-title"><span class="badge">9</span> ТҮГЭЭМЭЛ АЛДААНУУД (COMMON ERRORS)</div>
+        <div class="warn-box">
+          ❌ <b>ModuleNotFoundError:</b> <code>No module named 'xxx'</code><br>
+          • Шалтгаан: Модуль суугаагүй эсвэл нэрийг нь буруу бичсэн.<br><br>
+          ❌ <b>AttributeError:</b> <code>module 'xxx' has no attribute 'yyy'</code><br>
+          • Шалтгаан: Модуль олдсон боловч дотор нь дуудсан функц/хувьсагч нь байхгүй.
+        </div>
+      </div>
+
+      <div class="box full-width" style="background:#faf8fe;">
+        <div class="box-title"><span class="badge">10</span> ЧУХАЛ САНАМЖУУД БА ДАВТАХ ЦЭГҮҮД</div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; font-size:12px;">
+          <div>
+            ✔️ <code>import</code> нь кодыг модульчлагдсан, дахин ашиглагдах боломжтой болгоно.<br>
+            ✔️ <code>from module import *</code> гэж бичихээс аль болох зайлсхийх хэрэгтэй.<br>
+            ✔️ Модулиуд зөвхөн нэг л удаа ачаалагддаг (Python санах ойдоо санадаг).
+          </div>
+          <div>
+            ✔️ <code>sys.modules</code> ашиглан одоо ачаалагдсан модулиудыг харж болно.<br>
+            ✔️ Товчилсон нэр (alias) ашиглан кодоо богино бөгөөд цэвэрхэн болго.<br>
+            ✔️ Алдаа гарвал сангийн нэр болон суусан эсэхийг нь эхэлж шалгаарай.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- 7. PYTHON LIBRARIES -->
+  <!-- ============================================================== -->
+  <div id="tab-libraries" class="sheet">
+    <div class="header">
+      <h1>PYTHON LIBRARIES</h1>
+      <p>Стандарт болон гуравдагч талын сангуудын лавлах</p>
+    </div>
+    <div class="grid">
+      <div class="box">
+        <div class="box-title"><span class="badge">1</span> САН (LIBRARY) ГЭЖ ЮУ ВЭ?</div>
+        <ul>
+          <li>Сан нь урьдчилан бэлтгэсэн кодуудын (модуль, функц, класс) нэгдэл юм.</li>
+          <li>Python-ийн боломжуудыг асар ихээр тэлдэг.</li>
+          <li>Цаг хугацаа болон хүч хөдөлмөрийг хэмнэдэг.</li>
+          <li>Бид сангуудыг импорт хийж доторх функцуудыг нь шууд ашигладаг.</li>
+        </ul>
+        <div class="note-box">
+          🧰 <b>Бодит амьдралын жишээ:</b> Сангуудыг багажны том цүнх гэж бод. Багаж болгоныг өөрөө шинээр хийхийн оронд бэлэн багажнуудыг ашиглан ажлаа хурдан гүйцэтгэнэ.
+        </div>
+      </div>
+
+      <div class="box">
+        <div class="box-title"><span class="badge">2</span> САНГ ХЭРХЭН АШИГЛАХ ВЭ?</div>
+        <div class="code-block">
+# 1. Бүтэн санг дуудах
+import library_name
+
+# 2. Тусгай модулийг дуудах
+from library_name import module_name
+
+# 3. Тусгай функц/классыг дуудах
+from library_name import function1, function2
+
+# 4. Товч нэр өгч дуудах
+import library_name as ln
+from library_name import module as m
+        </div>
+        <div class="tip-box">💡 <b>Зөвлөмж:</b> Кодоо цэвэрхэн байлгахын тулд товчилсон нэр (alias) ашиглаарай.</div>
+      </div>
+
+      <div class="box full-width">
+        <div class="box-title"><span class="badge">3</span> АЛДАРТАЙ PYTHON САНГУУД (POPULAR LIBRARIES)</div>
+        <table>
+          <tr><th>Сан (Library)</th><th>Зориулалт (Use)</th><th>Хэрэглээний салбар (Applications)</th></tr>
+          <tr><td><b>NumPy</b></td><td>Тоон тооцоолол (Массив, матриц, математик)</td><td>Өгөгдлийн шинжилгээ, ML, шинжлэх ухааны тооцоолол</td></tr>
+          <tr><td><b>Pandas</b></td><td>Өгөгдөл боловсруулах ба шинжлэх</td><td>Дата цэвэрлэх, хүснэгтэн өгөгдлийн шинжилгээ</td></tr>
+          <tr><td><b>Matplotlib</b></td><td>Өгөгдлийг дүрслэх (график, диаграмм зурах)</td><td>График, хяналтын самбар (dashboards)</td></tr>
+          <tr><td><b>Seaborn</b></td><td>Статистикийн өгөгдлийг гоёмсог дүрслэх</td><td>Статистик шинжилгээний график</td></tr>
+          <tr><td><b>Requests</b></td><td>HTTP сүлжээний хүсэлт илгээх (Web)</td><td>API-тай ажиллах, вебээс өгөгдөл татах</td></tr>
+          <tr><td><b>BeautifulSoup</b></td><td>Вебээс өгөгдөл хуулах (HTML parsing)</td><td>Веб хуудаснаас мэдээлэл задлах (Scraping)</td></tr>
+          <tr><td><b>OS</b></td><td>Үйлдлийн системтэй ажиллах</td><td>Файл ба хавтастай ажиллах үйлдлүүд</td></tr>
+          <tr><td><b>Datetime</b></td><td>Огноо ба цаг хугацааны үйлдлүүд</td><td>Хугацааны бүс, огноо форматлах</td></tr>
+          <tr><td><b>Math</b></td><td>Математикийн функцууд</td><td>Тооцоолол, тригонометр</td></tr>
+          <tr><td><b>JSON</b></td><td>JSON форматтай ажиллах</td><td>API өгөгдөл солилцоо</td></tr>
+          <tr><td><b>Random</b></td><td>Санамсаргүй тоо үүсгэх</td><td>Симуляци, тоглоом хөгжүүлэлт</td></tr>
+          <tr><td><b>Collections</b></td><td>Тусгай өгөгдлийн бүтцүүд</td><td>Counter, defaultdict, deque</td></tr>
+        </table>
+      </div>
+
+      <div class="box full-width">
+        <div class="box-title"><span class="badge">4</span> КОДЫН ЖИШЭЭНҮҮД (EXAMPLES CHEAT SHEET)</div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+          <div class="code-block">
+# 1. NumPy (Массив)
+import numpy as np
+arr = np.array([1, 2, 3])
+print(arr * 2)  # [2 4 6]
+
+# 2. Pandas (Хүснэгт)
+import pandas as pd
+data = {'Name': ['A', 'B'], 'Score': [90, 85]}
+df = pd.DataFrame(data)
+print(df)
+
+# 3. Matplotlib (График зурах)
+import matplotlib.pyplot as plt
+x, y = [1, 2, 3, 4], [10, 20, 30, 40]
+plt.plot(x, y)
+plt.title("Line Plot")
+plt.show()
+
+# 4. Requests (API дуудах)
+import requests
+res = requests.get('https://api.github.com')
+print(res.status_code)  # 200
+          </div>
+          <div class="code-block">
+# 5. OS (Файл & Хавтас)
+import os
+print(os.listdir())     # файлуудыг жагсаах
+os.mkdir('new_folder')  # хавтас үүсгэх
+
+# 6. Datetime (Цаг хугацаа)
+from datetime import datetime
+now = datetime.now()
+print(now.strftime("%Y-%m-%d"))  # 2024-05-20
+
+# 7. Math (Математик)
+import math
+print(math.sqrt(16))    # 4.0
+print(math.pi)          # 3.14159
+
+# 8. JSON (Өгөгдөл хөрвүүлэх)
+import json
+data = {'name': 'Alice'}
+js = json.dumps(data)
+print(js)               # {"name": "Alice"}
+          </div>
+        </div>
+      </div>
+
+      <div class="box">
+        <div class="box-title"><span class="badge">5</span> СТАНДАРТ vs ГУРАВДАГЧ ТАЛЫН САНГУУД</div>
+        <table>
+          <tr><th>Стандарт сангууд (Built-in)</th><th>Гуравдагч талын сангууд (External)</th></tr>
+          <tr><td>Python суулгахад хамт ирдэг.</td><td>Тусгайлан суулгах шаардлагатай.</td></tr>
+          <tr><td>Нэмэлт суулгац хийх шаардлагагүй.</td><td><code>pip</code> ашиглан суулгана.</td></tr>
+          <tr><td>Python нийгэмлэг хөгжүүлж дэмждэг.</td><td>Гадны хөгжүүлэгчид бүтээсэн.</td></tr>
+          <tr><td>Жишээ: <code>os</code>, <code>math</code>, <code>datetime</code>, <code>random</code>, <code>json</code></td><td>Жишээ: <code>numpy</code>, <code>pandas</code>, <code>matplotlib</code>, <code>requests</code></td></tr>
+        </table>
+      </div>
+
+      <div class="box">
+        <div class="box-title"><span class="badge">6</span> ГАДААД САНГ СУУЛГАХ (PIP АШИГЛАХ)</div>
+        <div class="code-block">
+# Сан суулгах
+pip install library_name
+
+# Олон санг нэгэн зэрэг суулгах
+pip install numpy pandas matplotlib
+
+# Тодорхой хувилбарыг зааж суулгах
+pip install requests==2.31.0
+
+# Суусан сангуудыг харах
+pip list
+
+# Санг шинэчлэх (Upgrade)
+pip install --upgrade package_name
+        </div>
+        <div class="tip-box">💡 <i>Төслийн хамаарлуудыг эмх цэгцтэй байлгахын тулд Virtual Environment үүсгэж суулгаарай.</i></div>
+      </div>
+
+      <div class="box">
+        <div class="box-title"><span class="badge">7</span> НЭРИЙН ТОВЧЛОЛ (ALIASING BEST PRACTICE)</div>
+        <table>
+          <tr><th>Сан</th><th>Түгээмэл товчлол</th><th>Жишээ код</th></tr>
+          <tr><td>NumPy</td><td><code>np</code></td><td><code>import numpy as np</code></td></tr>
+          <tr><td>Pandas</td><td><code>pd</code></td><td><code>import pandas as pd</code></td></tr>
+          <tr><td>Matplotlib</td><td><code>plt</code></td><td><code>import matplotlib.pyplot as plt</code></td></tr>
+          <tr><td>Seaborn</td><td><code>sns</code></td><td><code>import seaborn as sns</code></td></tr>
+          <tr><td>Datetime</td><td><code>dt</code></td><td><code>import datetime as dt</code></td></tr>
+        </table>
+      </div>
+
+      <div class="box">
+        <div class="box-title"><span class="badge">8</span> САНГИЙН АЛДААНУУД БА ШИЙДЭЛ</div>
+        <table>
+          <tr><th>Алдаа</th><th>Шалтгаан</th><th>Шийдэл</th></tr>
+          <tr><td><code>ModuleNotFoundError</code></td><td>Сан суугаагүй</td><td><code>pip install xxx</code> хийж суулгах</td></tr>
+          <tr><td><code>ImportError</code></td><td>Импорт буруу бичигдсэн</td><td>Нэр болон бичиглэлээ нягтлах</td></tr>
+          <tr><td><code>AttributeError</code></td><td>Функц/класс нь тухайн санд байхгүй</td><td>Баримт бичгийг шалгах, <code>dir(модуль)</code> ашиглах</td></tr>
+          <tr><td>Хувилбарын зөрчил</td><td>Сангууд өөр өөр хувилбар шаардсан</td><td>Виртуал орчин (venv) ашиглах</td></tr>
+        </table>
+      </div>
+
+      <div class="box full-width" style="background:#faf8fe;">
+        <div class="box-title"><span class="badge">9</span> ЧУХАЛ САНАМЖУУД</div>
+        <p style="text-align: center; font-weight: bold; color: #432b73; margin-bottom: 6px;">
+          "Сайн хөгжүүлэгчид илүү их код биш, бага код бичиж ихийг бүтээдэг!" (Good developers write less code, not more code!)
+        </p>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; font-size:12px;">
+          <div>
+            ✔️ Сангууд нь таны кодыг хүчирхэг бөгөөд үр ашигтай болгоно.<br>
+            ✔️ Шаардлагатай байгаа зүйлээ л импортол.<br>
+            ✔️ Цэвэрхэн кодын төлөө түгээмэл нэрийн товчлолуудыг хэрэглэж занш.
+          </div>
+          <div>
+            ✔️ Баримт бичгийг (Documentation) нь үргэлж харж хэрэглэж сур.<br>
+            ✔️ Төсөл болгондоо Virtual environment ашиглаж хэвшээрэй.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- 8. PYTHON FILE SYSTEM -->
+  <!-- ============================================================== -->
+  <div id="tab-files" class="sheet">
+    <div class="header">
+      <h1>PYTHON FILE SYSTEM</h1>
+      <p>Файлын систем ба файлтай ажиллах бүрэн лавлах</p>
+    </div>
+    <div class="grid">
+      <div class="box">
+        <div class="box-title"><span class="badge">1</span> ФАЙЛЫН СИСТЕМ ГЭЖ ЮУ ВЭ?</div>
+        <ul>
+          <li>Файлын систем гэдэг нь диск дээр файл, хавтсыг зохион байгуулах, хадгалах, хандах болон удирдах арга зам юм.</li>
+          <li>Python нь файл болон хавтастай ажиллах тусгай модулиудаар хангадаг.</li>
+          <li>Гол модулиуд: <code>os</code>, <code>shutil</code>, <code>pathlib</code>.</li>
+        </ul>
+        <div class="note-box">
+          🗄️ <b>Бодит амьдралын жишээ:</b> Компьютерээ том бичгийн шүүгээ гэж төсөөл. Файлууд нь доторх бичиг баримтууд, харин хавтаснууд (folders) нь шүүгээний тасаг юм.
+        </div>
+      </div>
+
+      <div class="box">
+        <div class="box-title"><span class="badge">2</span> ЧУХАЛ МОДУЛИУД (MODULES)</div>
+        <ul>
+          <li><code>os</code> ➔ Үйлдлийн системтэй шууд харьцах.</li>
+          <li><code>os.path</code> ➔ Файлын зам болон нэршилтэй ажиллах.</li>
+          <li><code>shutil</code> ➔ Өндөр түвшний үйлдлүүд (хуулах, зөөх, хавтас бүхлээр нь устгах).</li>
+          <li><code>pathlib</code> ➔ Объект хандалтат орчин үеийн, хялбар шийдэл.</li>
+        </ul>
+        <div class="tip-box">💡 <i>Анхлан суралцагчдад <code>os</code> нь түгээмэл байдаг бол орчин үеийн кодонд <code>pathlib</code>-ийг илүүд үздэг.</i></div>
+      </div>
+
+      <div class="box">
+        <div class="box-title"><span class="badge">3</span> АЖИЛЛАЖ БУЙ ХАВТАС (WORKING DIRECTORY)</div>
+        <p>Таны Python скрипт яг одоо ажиллаж байгаа хавтас юм.</p>
+        <div class="code-block">
+import os
+print(os.getcwd())  # Одоогийн ажиллаж буй хавтсыг буцаана
+# Гаралт: C:\Users\YourName\Projects
+        </div>
+      </div>
+
+      <div class="box">
+        <div class="box-title"><span class="badge">4</span> ФАЙЛ НЭЭХ ГОРИМУУД (FILE MODES)</div>
+        <table>
+          <tr><th>Горим</th><th>Тайлбар (Description)</th></tr>
+          <tr><td><code>r</code></td><td><b>Унших (Read - анхдагч):</b> Файл заавал өмнө нь байх ёстой.</td></tr>
+          <tr><td><code>w</code></td><td><b>Бичих (Write):</b> Шинэ файл үүсгэнэ, байгаа бол хуучин агуулгыг дарж бичнэ.</td></tr>
+          <tr><td><code>a</code></td><td><b>Залгах (Append):</b> Хуучин мэдээллийн төгсгөлд шинэ өгөгдлийг залгаж бичнэ.</td></tr>
+          <tr><td><code>x</code></td><td><b>Үүсгэх (Create):</b> Шинэ файл үүсгэнэ, байгаа бол алдаа өгнө.</td></tr>
+          <tr><td><code>b</code></td><td><b>Хоёртын горим (Binary):</b> Зураг, аудио, PDF зэрэгт ашиглана.</td></tr>
+          <tr><td><code>t</code></td><td><b>Текст горим (Text - анхдагч).</b></td></tr>
+          <tr><td><code>+</code></td><td><b>Унших ба бичих хамтарсан горим.</b></td></tr>
+        </table>
+        <p style="font-size:11px; margin-top:4px;">Жишээнүүд: <code>"r"</code>, <code>"w"</code>, <code>"a"</code>, <code>"rb"</code>, <code>"w+"</code>, <code>"a+"</code></p>
+      </div>
+
+      <div class="box full-width">
+        <div class="box-title"><span class="badge">5</span> ТҮГЭЭМЭЛ ҮЙЛДЛҮҮД (OS MODULE)</div>
+        <table>
+          <tr><th>Үйлдэл</th><th>Функц / Синтакс</th><th>Жишээ</th><th>Тайлбар</th></tr>
+          <tr><td>Ажиллаж буй хавтас авах</td><td><code>os.getcwd()</code></td><td><code>os.getcwd()</code></td><td>Одоо байгаа хавтасны замыг буцаана.</td></tr>
+          <tr><td>Хавтас солих</td><td><code>os.chdir(path)</code></td><td><code>os.chdir("C:/data")</code></td><td>Заасан хавтас руу шилжинэ.</td></tr>
+          <tr><td>Хавтас доторхыг харах</td><td><code>os.listdir(path)</code></td><td><code>os.listdir(".")</code></td><td>Файл ба хавтаснуудын нэрсийн жагсаалт.</td></tr>
+          <tr><td>Шинэ хавтас үүсгэх</td><td><code>os.mkdir(path)</code></td><td><code>os.mkdir("new_folder")</code></td><td>Ганц шинэ хавтас үүсгэнэ.</td></tr>
+          <tr><td>Олон хавтас угсруулан үүсгэх</td><td><code>os.makedirs(path)</code></td><td><code>os.makedirs("a/b/c")</code></td><td>Доторх хавтаснуудыг цуг үүсгэнэ.</td></tr>
+          <tr><td>Хоосон хавтас устгах</td><td><code>os.rmdir(path)</code></td><td><code>os.rmdir("temp_folder")</code></td><td>Зөвхөн хоосон хавтсыг устгана.</td></tr>
+          <tr><td>Файл устгах</td><td><code>os.remove(path)</code></td><td><code>os.remove("file.txt")</code></td><td>Заасан файлыг устгана.</td></tr>
+          <tr><td>Нэр өөрчлөх</td><td><code>os.rename(src, dst)</code></td><td><code>os.rename("a.txt", "b.txt")</code></td><td>Файл эсвэл хавтасны нэрийг солино.</td></tr>
+          <tr><td>Оршин буйг шалгах</td><td><code>os.path.exists(path)</code></td><td><code>os.path.exists("a.txt")</code></td><td>Байгаа бол <code>True</code>, үгүй бол <code>False</code>.</td></tr>
+          <tr><td>Файл мөн эсэх</td><td><code>os.path.isfile(path)</code></td><td><code>os.path.isfile("a.txt")</code></td><td>Файл мөн бол <code>True</code>.</td></tr>
+          <tr><td>Хавтас мөн эсэх</td><td><code>os.path.isdir(path)</code></td><td><code>os.path.isdir("data")</code></td><td>Хавтас мөн бол <code>True</code>.</td></tr>
+        </table>
+      </div>
+
+      <div class="box">
+        <div class="box-title"><span class="badge">6</span> ФАЙЛТАЙ АЖИЛЛАХ СУУРЬ (BASIC FILE HANDLING)</div>
+        <div class="code-block">
+# Файл нээх
+f = open("file.txt", "r")
+
+# Файл хаах (Заавал хийх ёстой!)
+f.close()
+        </div>
+        <p><b>Файлаас унших:</b></p>
+        <div class="code-block">
+f.read()        # Бүх файлыг бүтнээр уншина
+f.readline()    # Зөвхөн нэг мөрийг уншина
+f.readlines()   # Бүх мөрийг жагсаалт (list) болгож уншина
+        </div>
+        <p><b>Файлд бичих:</b></p>
+        <div class="code-block">
+f.write("Hello\n")              # Мөр бичих
+f.writelines(["Hi\n", "Bye\n"]) # Жагсаалтаар бичих
+        </div>
+        <p><b>Хамгийн шилдэг туршлага (with ашиглах):</b></p>
+        <div class="code-block">
+with open("file.txt", "r") as f:
+    data = f.read()
+# with ашиглавал файл автоматаар хаагддаг!
+        </div>
+      </div>
+
+      <div class="box">
+        <div class="box-title"><span class="badge">7</span> ФАЙЛЫН ЗАМТАЙ АЖИЛЛАХ (OS.PATH)</div>
+        <table>
+          <tr><th>Функц</th><th>Хэрэглээ</th></tr>
+          <tr><td><code>os.path.join(p1, p2)</code></td><td>Замуудыг системд нь тохируулан зөв залгах</td></tr>
+          <tr><td><code>os.path.basename(p)</code></td><td>Замаас зөвхөн файлын нэрийг салгаж авах</td></tr>
+          <tr><td><code>os.path.dirname(p)</code></td><td>Замаас зөвхөн хавтасны замыг авах</td></tr>
+          <tr><td><code>os.path.abspath(p)</code></td><td>Бүтэн бодит (absolute) замыг олох</td></tr>
+          <tr><td><code>os.path.split(p)</code></td><td>Замыг (хавтас, файл) хоёр болгон хуваах</td></tr>
+          <tr><td><code>os.path.getsize(p)</code></td><td>Файлын хэмжээг байтаар олох</td></tr>
+          <tr><td><code>os.path.getmtime(p)</code></td><td>Сүүлд өөрчлөгдсөн хугацааг олох</td></tr>
+        </table>
+        <div class="code-block">
+import os
+os.path.join("C:/data", "file.txt")  # C:/data/file.txt
+os.path.basename("C:/data/file.txt") # file.txt
+os.path.dirname("C:/data/file.txt")  # C:/data
+        </div>
+      </div>
+
+      <div class="box">
+        <div class="box-title"><span class="badge">8</span> PATHLIB (ОРЧИН ҮЕИЙН ШИЙДЭЛ)</div>
+        <ul>
+          <li>Python 3.4-өөс нэвтэрсэн.</li>
+          <li>Объект хандалтат бөгөөд маш хялбар бичиглэлтэй.</li>
+        </ul>
+        <div class="code-block">
+from pathlib import Path
+p = Path("C:/data/file.txt")
+
+p.exists()       # оршин буй эсэхийг шалгах
+p.is_file()      # файл мөн эсэх
+p.is_dir()       # хавтас мөн эсэх
+p.name           # файлын бүтэн нэр
+p.stem           # файлын өргөтгөлгүй нэр
+p.suffix         # өргөтгөл (.txt)
+p.parent         # дээд хавтас
+
+# Зам залгахдаа / операторыг шууд ашиглана!
+p2 = p.parent / "new_folder" / "a.txt"
+        </div>
+      </div>
+
+      <div class="box">
+        <div class="box-title"><span class="badge">9</span> SHUTIL МОДУЛЬ (ДЭЭД ТҮВШНИЙ ҮЙЛДЭЛ)</div>
+        <table>
+          <tr><th>Функц</th><th>Хэрэглээ</th></tr>
+          <tr><td><code>shutil.copy(src, dst)</code></td><td>Файлыг хуулбарлах</td></tr>
+          <tr><td><code>shutil.copytree(src, dst)</code></td><td>Бүхэл бүтэн хавтсыг агуулгатай нь хуулах</td></tr>
+          <tr><td><code>shutil.move(src, dst)</code></td><td>Файл/хавтсыг зөөх эсвэл нэр солих</td></tr>
+          <tr><td><code>shutil.rmtree(path)</code></td><td>Хавтсыг бүх агуулгатай нь бүрэн устгах</td></tr>
+        </table>
+        <div class="warn-box">
+          ⚠️ <b>Болгоомжтой байх:</b> <code>shutil.rmtree()</code> нь доторх бүх файлуудтай нь бүрмөсөн буцалтгүй устгадаг!
+        </div>
+      </div>
+
+      <div class="box full-width">
+        <div class="box-title"><span class="badge">10</span> АЖИЛЛАХ ДАРААЛАЛ БОДИТ ЖИШЭЭ (WORKFLOW)</div>
+        <div class="code-block">
+import os
+
+# 1. Хавтас үүсгэх
+os.mkdir("my-folder")
+
+# 2. Файл үүсгэж мэдээлэл бичих
+f = open("my-folder/hello.txt", "w")
+f.write("Hello, Python!")
+f.close()
+
+# 3. Файлаас унших
+f = open("my-folder/hello.txt", "r")
+print(f.read())
+f.close()
+
+# 4. Файлын нэрийг солих
+os.rename("my-folder/hello.txt", "my-folder/greet.txt")
+
+# 5. Файлыг устгах
+os.remove("my-folder/greet.txt")
+        </div>
+      </div>
+
+      <div class="box full-width" style="background:#faf8fe;">
+        <div class="box-title"><span class="badge">11</span> ЧУХАЛ САНАМЖУУД БА СҮҮЛЧИЙН МИНУТЫН ДАВТЛАГА</div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; font-size:12px;">
+          <div>
+            ✔️ Файл нээсэн бол заавал хааж занш (санах ойг чөлөөлөх).<br>
+            ✔️ Аюулгүй, цэвэр ажиллагаанд <code>with open(...) as f:</code> ашигла.<br>
+            ✔️ Windows замуудад <code>r"C:\path"</code> хэлбэрээр raw string ашиглаарай.<br>
+            ✔️ Файл дээр үйлдэл хийхээс өмнө <code>os.path.exists()</code>-ээр шалгаж байх.
+          </div>
+          <div>
+            ✔️ Файл болон хавтасны (file vs directory) ялгааг сайн анхаар.<br>
+            ✔️ Файл, хавтас устгахдаа ялангуяа <code>rmtree()</code> дээр маш болгоомжтой бай.<br>
+            ✔️ Орчин үеийн цэвэр кодонд <code>pathlib</code> ашиглаарай!
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ТАБ СОЛИХ SCRIPT -->
+  <script>
+    function openTab(tabId) {
+      document.querySelectorAll('.sheet').forEach(s => s.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById(tabId).classList.add('active');
+      event.target.classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  </script>
+</body>
+</html>
